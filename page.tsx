@@ -1,5 +1,7 @@
 "use client"
 
+
+
 import React, { useState } from 'react'
 import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -7,14 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { toast } from 'sonner'
-import dynamic from 'next/dynamic'
-import Image from 'next/image'
-
-// Dynamically import MapComponent with SSR disabled
-const MapComponent = dynamic(() => import('@/components/MapComponent'), { 
-  ssr: false,
-  loading: () => <div className="h-64 w-full bg-gray-100 animate-pulse" />
-})
+import MapComponent from '@/components/MapComponent'
 
 type Step = {
   icon: React.ReactNode;
@@ -76,13 +71,20 @@ const handlingSteps: Step[] = [
   }
 ]
 
+/*
+interface ProductJourneyProps {
+  gtin?: string;
+  batch?: string;
+  serialNumber?: string;
+}
+*/
 export default function ProductJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
   const couponCode = 'LOYALTY15'
 
-  const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 max-w-sm mx-auto">
+  /*const renderSteps = (steps: Step[]) => (
+    <div className="space-y-4">
       {steps.map((step, index) => (
         <Collapsible 
           key={index}
@@ -92,14 +94,51 @@ export default function ProductJourney() {
           <Card className="border-none shadow-sm">
             <CardContent className="p-4">
               <CollapsibleTrigger className="flex items-center justify-between w-full">
-                <div className="flex items-center w-full">
+                <div className="flex items-center">
                   <div className="mr-4 p-2 bg-gray-100 rounded-full">{step.icon}</div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-center">{step.title}</h3>
-                    <p className="text-sm text-gray-600 text-center">{step.description}</p>
+                  <div>
+                    <h3 className="text-lg font-semibold">{step.title}</h3>
+                    <p className="text-sm text-gray-600">{step.description}</p>
                   </div>
                 </div>
-                <div className="ml-4">
+                {expandedStep === index ? <ChevronUp className="h-5 w-5 text-gray-500" /> : <ChevronDown className="h-5 w-5 text-gray-500" />}
+              </CollapsibleTrigger>
+              <CollapsibleContent className="pt-4">
+                <p className="text-gray-700">{step.details}</p>
+                {step.pdfLink && (
+                  <Button variant="outline" className="mt-2" asChild>
+                    <a href={step.pdfLink} target="_blank" rel="noopener noreferrer">
+                      Download PDF Guide
+                    </a>
+                  </Button>
+                )}
+              </CollapsibleContent>
+            </CardContent>
+          </Card>
+        </Collapsible>
+      ))}
+    </div>
+  )
+  */
+  const renderSteps = (steps: Step[]) => (
+    <div className="space-y-4 max-w-sm mx-auto"> {/* Added max-w-sm and mx-auto */}
+      {steps.map((step, index) => (
+        <Collapsible 
+          key={index}
+          open={expandedStep === index}
+          onOpenChange={() => setExpandedStep(expandedStep === index ? null : index)}
+        >
+          <Card className="border-none shadow-sm">
+            <CardContent className="p-4">
+              <CollapsibleTrigger className="flex items-center justify-between w-full">
+                <div className="flex items-center w-full"> {/* Added w-full */}
+                  <div className="mr-4 p-2 bg-gray-100 rounded-full">{step.icon}</div>
+                  <div className="flex-1"> {/* Added flex-1 */}
+                    <h3 className="text-lg font-semibold text-center">{step.title}</h3> {/* Added text-center */}
+                    <p className="text-sm text-gray-600 text-center">{step.description}</p> {/* Added text-center */}
+                  </div>
+                </div>
+                <div className="ml-4"> {/* Added ml-4 for spacing */}
                   {expandedStep === index ? 
                     <ChevronUp className="h-5 w-5 text-gray-500" /> : 
                     <ChevronDown className="h-5 w-5 text-gray-500" />
@@ -107,9 +146,9 @@ export default function ProductJourney() {
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-4">
-                <p className="text-gray-700 text-center">{step.details}</p>
+                <p className="text-gray-700 text-center">{step.details}</p> {/* Added text-center */}
                 {step.pdfLink && (
-                  <div className="flex justify-center mt-2">
+                  <div className="flex justify-center mt-2"> {/* Added flex and justify-center */}
                     <Button variant="outline" asChild>
                       <a href={step.pdfLink} target="_blank" rel="noopener noreferrer">
                         Download PDF Guide
@@ -124,19 +163,20 @@ export default function ProductJourney() {
       ))}
     </div>
   )
-
-  const copyToClipboard = () => {
-    if (typeof window !== 'undefined') {
-      navigator.clipboard.writeText(couponCode).then(() => {
-        toast(
-          <div>
-            <strong>Coupon code copied</strong>
-            <p>Use for a 15% discount.</p>
-          </div>
-        )
-      })
-    }
-  }
+const title = {
+  text: 'Coupon code copied',
+  description: 'Use for a 15% discount.'
+};
+const copyToClipboard = () => {
+  // Ensure title is a string or a valid React element
+  navigator.clipboard.writeText(couponCode).then(() => {
+  toast(<div>
+    <strong>{title.text}</strong>
+    <p>{title.description}</p>
+  </div>); // Use a property of the object
+  // or
+  // toast(<div>{title.text}</div>); // Use a React element
+})};
 
   return (
     <Card className="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
@@ -187,15 +227,13 @@ export default function ProductJourney() {
           <h2 className="text-2xl font-bold mb-2 text-gray-800">Discover your</h2>
           <h1 className="text-3xl font-bold mb-6 text-gray-900">Product's Journey</h1>
           
-          <div className="relative w-full h-48 mb-6">
-            <Image 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mjEAzcEcSHx_HiSyGmIZT_788eb4cd2ecc45b2bf60495927b125a6-poXYOMB78R8Mv2HchIzWj3JbHlsIRA.png" 
-              alt="Brown leather sofa"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
-            />
-          </div>
+        
+          
+          <img 
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mjEAzcEcSHx_HiSyGmIZT_788eb4cd2ecc45b2bf60495927b125a6-poXYOMB78R8Mv2HchIzWj3JbHlsIRA.png" 
+            alt="Brown leather sofa" 
+            className="w-full h-auto mb-6 rounded-lg shadow-md"
+          />
           
           {activeSection === 'product' && renderSteps(productSteps)}
           {activeSection === 'impact' && renderSteps(impactSteps)}
