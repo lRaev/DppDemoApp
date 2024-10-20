@@ -139,6 +139,7 @@ export default function ProductJourney() {
   }
 
   return (
+    
     <Card className="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
       <div className="relative h-64">
         <MapComponent />

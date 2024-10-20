@@ -1,16 +1,17 @@
 "use client"
 
-import React, { useState } from 'react'
-import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
-import dynamic from 'next/dynamic'
+import StickyText from '@/components/StickyText';
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 
-// Dynamically import MapComponent with SSR disabled
 const MapComponent = dynamic(() => import('@/components/MapComponent'), { 
   ssr: false,
   loading: () => <div className="h-64 w-full bg-gray-100 animate-pulse" />
@@ -36,12 +37,6 @@ const productSteps: Step[] = [
     title: 'Brand Details', 
     description: 'Luxury furniture brand with a focus on sustainability.',
     details: 'We have been crafting premium furniture since 1985. We are committed to sustainable practices and ethical sourcing of materials.'
-  },
-  { 
-    icon: <Sparkles className="h-6 w-6 text-primary" />,
-    title: 'Care Instructions', 
-    description: 'Proper care ensures long-lasting beauty and comfort.',
-    details: 'Clean with a soft, dry cloth. For spills, blot immediately with a clean, absorbent cloth. Use leather conditioner every 6-12 months to maintain the leather\'s softness and prevent cracking.'
   },
 ]
 
@@ -71,15 +66,26 @@ const handlingSteps: Step[] = [
     icon: <ShoppingBag className="h-6 w-6 text-blue-600" />,
     title: 'Home Setup',
     description: 'Easy installation in your space.',
-    details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance. You can also download our step-by-step PDF guide for offline reference.',
+    details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
     pdfLink: '/assembly-instructions.pdf'
-  }
+  },
+  { 
+    icon: <Sparkles className="h-6 w-6 text-blue-600" />,
+    title: 'Care Instructions', 
+    description: 'Proper care ensures long-lasting beauty and comfort.',
+    details: 'Clean with a soft, dry cloth. For spills, blot immediately with a clean, absorbent cloth. Use leather conditioner every 6-12 months to maintain the leather\'s softness and prevent cracking.'
+  },
 ]
 
 export default function ProductJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
   const couponCode = 'LOYALTY15'
+  const [isBrowser, setIsBrowser] = useState(false)
+
+  useEffect(() => {
+    setIsBrowser(true)
+  }, [])
 
   const renderSteps = (steps: Step[]) => (
     <div className="space-y-4 max-w-sm mx-auto">
@@ -125,8 +131,92 @@ export default function ProductJourney() {
     </div>
   )
 
+  const productDetails = {
+    id: '123456789',
+    manufacturer: 'GreenFurniture Co.',
+    materialComposition: [
+      {
+        materialType: 'Wood',
+        source: 'FSC-certified Oak',
+        sustainabilityCertification: 'FSC',
+        percentage: 70,
+        subcomponents: [
+          { name: 'Frame', material: 'Oak', source: 'FSC-certified' },
+          { name: 'Legs', material: 'Oak', source: 'FSC-certified' },
+        ]
+      },
+      {
+        materialType: 'Metal',
+        source: 'Recycled Steel',
+        sustainabilityCertification: 'ISO 14001',
+        percentage: 20,
+        subcomponents: [
+          { name: 'Screws', material: 'Steel', source: 'Recycled' },
+          { name: 'Hinges', material: 'Steel', source: 'Recycled' },
+        ]
+      },
+      {
+        materialType: 'Textile',
+        source: 'Natural Fibers',
+        sustainabilityCertification: 'GOTS',
+        percentage: 10,
+        subcomponents: [
+          { name: 'Cushion Cover', material: 'Cotton', source: 'Organic' },
+          { name: 'Padding', material: 'Wool', source: 'Organic' },
+        ]
+      },
+    ],
+    healthAndSafety: {
+      chemicalUse: 'Water-based, low-VOC finishes and adhesives',
+      safetyCertifications: ['CE marking', 'EN 1021 (Furniture - Assessment of the ignitability of upholstered furniture)'],
+      allergenInformation: 'May contain natural latex in cushioning'
+    },
+    consumerInformation: {
+      careInstructions: 'Vacuum regularly. Spot clean with mild soap and water. Professional cleaning recommended for stubborn stains.',
+      assemblyInstructions: 'https://example.com/assembly-guide.pdf',
+      warranty: '5-year limited warranty covering manufacturing defects',
+      disassemblyInstructions: 'https://example.com/disassembly-guide.pdf',
+      repairServices: 'Contact our customer service for authorized repair centers in your area'
+    },
+    sustainabilityAndCircularEconomy: {
+      recyclability: '90%',
+      recycledContent: '25%',
+      reusePotential: 'High. Can be refurbished or repurposed. See our guide for ideas: https://example.com/reuse-guide',
+      repairabilityScore: '8/10',
+      endOfLifeInstructions: 'Disassemble for wood and metal recycling at certified centers. Textile components can be composted or recycled depending on local facilities.',
+      takeback: 'Available in select regions. Visit our website for details on our furniture take-back program.'
+    },
+    environmentalImpact: {
+      carbonFootprint: '30kg CO2',
+      waterUsage: '50 liters',
+      energy: '200 kWh'
+    },
+    certifications: ['FSC', 'ISO 14001', 'GOTS']
+  }
+
+  const renderDetailSection = (title: string, icon: React.ReactNode, content: React.ReactNode) => (
+    <Collapsible className="mt-4">
+      <Card className="border-none shadow-sm">
+        <CardContent className="p-4">
+          <CollapsibleTrigger className="flex items-center justify-between w-full">
+            <div className="flex items-center w-full">
+              <div className="mr-4 p-2 bg-gray-100 rounded-full">
+                {icon}
+              </div>
+              <h3 className="text-lg font-semibold">{title}</h3>
+            </div>
+            <ChevronDown className="h-5 w-5 text-gray-500" />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-4">
+            {content}
+          </CollapsibleContent>
+        </CardContent>
+      </Card>
+    </Collapsible>
+  )
+
   const copyToClipboard = () => {
-    if (typeof window !== 'undefined') {
+    if (isBrowser) {
       navigator.clipboard.writeText(couponCode).then(() => {
         toast(
           <div>
@@ -139,11 +229,14 @@ export default function ProductJourney() {
   }
 
   return (
+    
     <Card className="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
-      <div className="relative h-64">
-        <MapComponent />
-      </div>
       <CardContent className="p-0">
+      <StickyText text="© 2024 Your Company Name. All rights reserved." />
+        <div className="text-gray- text-xs font-bold bg-blue-800 bg-opacity-70 p-2 text-center">
+          <h1 className="text-2xl font-bold">DigiPP by SoftGroup</h1>
+          <StickyText text="© 2024 Your Company Name. All rights reserved." />
+        </div>
         <div className="flex justify-around p-2 bg-gray-50">
           <Button 
             variant="ghost"
@@ -187,7 +280,7 @@ export default function ProductJourney() {
           <h2 className="text-2xl font-bold mb-2 text-gray-800">Discover your</h2>
           <h1 className="text-3xl font-bold mb-6 text-gray-900">Product's Journey</h1>
           
-          <div className="relative w-full h-48 mb-6">
+          <div className="relative w-full h-64 mb-6">
             <Image 
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mjEAzcEcSHx_HiSyGmIZT_788eb4cd2ecc45b2bf60495927b125a6-poXYOMB78R8Mv2HchIzWj3JbHlsIRA.png" 
               alt="Brown leather sofa"
@@ -197,7 +290,86 @@ export default function ProductJourney() {
             />
           </div>
           
-          {activeSection === 'product' && renderSteps(productSteps)}
+          {activeSection === 'product' && (
+            <>
+              {renderSteps(productSteps)}
+              
+              {renderDetailSection(
+                "Product Details",
+                <Info className="h-6 w-6 text-primary" />,
+                <Tabs defaultValue="composition" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="composition">Composition</TabsTrigger>
+                    <TabsTrigger value="consumer">Consumer Info</TabsTrigger>
+                    <TabsTrigger value="location">Location</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="composition">
+                    <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <dt className="font-semibold">Product ID:</dt>
+                      <dd>{productDetails.id}</dd>
+                      <dt className="font-semibold">Manufacturer:</dt>
+                      <dd>{productDetails.manufacturer}</dd>
+                      
+                      {productDetails.materialComposition.map((material, index) => (
+                        <React.Fragment key={index}>
+                          <dt className="font-semibold col-span-2 mt-2">{material.materialType} ({material.percentage}%):</dt>
+                          <dt className="font-semibold ml-2">Source:</dt>
+                          <dd>{material.source}</dd>
+                          <dt className="font-semibold ml-2">Certification:</dt>
+                          <dd>{material.sustainabilityCertification}</dd>
+                          <dt className="font-semibold ml-2">Subcomponents:</dt>
+                          <dd>
+                            {material.subcomponents.map((sub, subIndex) => (
+                              <div key={subIndex}>{sub.name}: {sub.material} ({sub.source})</div>
+                            ))}
+                          </dd>
+                        </React.Fragment>
+                      ))}
+                    </dl>
+                  </TabsContent>
+                  <TabsContent value="consumer">
+                    <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                      <dt className="font-semibold">Care Instructions:</dt>
+                      <dd>{productDetails.consumerInformation.careInstructions}</dd>
+                      <dt className="font-semibold">Assembly Guide:</dt>
+                      <dd>
+                        <a href={productDetails.consumerInformation.assemblyInstructions} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                          Download PDF
+                        </a>
+                      </dd>
+                      <dt className="font-semibold">Warranty:</dt>
+                      <dd>{productDetails.consumerInformation.warranty}</dd>
+                      <dt className="font-semibold">Disassembly Guide:</dt>
+                      <dd>
+                        <a href={productDetails.consumerInformation.disassemblyInstructions} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                          Download PDF
+                        </a>
+                      </dd>
+                      <dt className="font-semibold">Repair Services:</dt>
+                      <dd>{productDetails.consumerInformation.repairServices}</dd>
+                    </dl>
+                  </TabsContent>
+                  <TabsContent value="location">
+                    <div className="h-64 w-full">
+                      {isBrowser && <MapComponent />}
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              )}
+              {renderDetailSection(
+                "Health & Safety",
+                <Shield className="h-6 w-6 text-primary" />,
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                  <dt className="font-semibold">Chemical Use:</dt>
+                  <dd>{productDetails.healthAndSafety.chemicalUse}</dd>
+                  <dt className="font-semibold">Safety Certifications:</dt>
+                  <dd>{productDetails.healthAndSafety.safetyCertifications.join(', ')}</dd>
+                  <dt className="font-semibold">Allergen Information:</dt>
+                  <dd>{productDetails.healthAndSafety.allergenInformation}</dd>
+                </dl>
+              )}
+            </>
+          )}
           {activeSection === 'impact' && renderSteps(impactSteps)}
           {activeSection === 'handling' && renderSteps(handlingSteps)}
           
@@ -217,7 +389,7 @@ export default function ProductJourney() {
           </div>
           
           <div className="mt-8 bg-secondary/5 p-6 rounded-lg shadow-sm">
-            <h3 className="text-xl font-semibold mb-3 text-secondary">Special Offer</h3>
+            <h3 className="text-xl text-gray-700 font-semibold">Special Offer</h3>
             <p className="mb-4 text-gray-700">Limited time offer: Get a matching ottoman at 50% off with your sofa purchase!</p>
             <Button variant="secondary" className="w-full">Shop Now</Button>
           </div>
