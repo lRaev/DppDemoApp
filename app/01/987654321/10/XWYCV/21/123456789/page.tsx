@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box } from 'lucide-react'
+import { Coffee, Leaf, Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -26,22 +26,22 @@ type Step = {
 
 const productSteps: Step[] = [
   { 
-    icon: <ShoppingBag className="h-6 w-6 text-primary" />,
+    icon: <Coffee className="h-6 w-6 text-primary" />,
     title: 'Product Details', 
-    description: 'High-quality leather sofa with premium craftsmanship.',
-    details: 'Our leather sofa is made from top-grain leather, featuring a sturdy hardwood frame and high-resilience foam cushions for ultimate comfort and durability.'
+    description: 'High-quality coffee machine with smart features.',
+    details: 'Our coffee machine features precision brewing technology, adjustable settings for various coffee types, and a sleek stainless steel design for durability and style.'
   },
   { 
-    icon: <Tag className="h-6 w-6 text-primary" />,
-    title: 'Brand Details', 
-    description: 'Luxury furniture brand with a focus on sustainability.',
-    details: 'We have been crafting premium furniture since 1985. We are committed to sustainable practices and ethical sourcing of materials.'
+    icon: <Zap className="h-6 w-6 text-primary" />,
+    title: 'Energy Efficiency', 
+    description: 'Designed for optimal energy use.',
+    details: 'This coffee machine is rated A+++ for energy efficiency, with an auto-shutoff feature and low-power standby mode to minimize electricity consumption.'
   },
   { 
-    icon: <Sparkles className="h-6 w-6 text-primary" />,
-    title: 'Care Instructions', 
-    description: 'Proper care ensures long-lasting beauty and comfort.',
-    details: 'Clean with a soft, dry cloth. For spills, blot immediately with a clean, absorbent cloth. Use leather conditioner every 6-12 months to maintain the leather\'s softness and prevent cracking.'
+    icon: <Settings className="h-6 w-6 text-primary" />,
+    title: 'Maintenance', 
+    description: 'Easy care for long-lasting performance.',
+    details: 'Regular cleaning and descaling ensure optimal performance. The machine has a self-cleaning function and removable parts for easy maintenance.'
   },
 ]
 
@@ -50,99 +50,98 @@ const impactSteps: Step[] = [
     icon: <Leaf className="h-6 w-6 text-green-600" />,
     title: 'Sustainability',
     description: 'Our commitment to environmental responsibility.',
-    details: 'We use responsibly sourced materials and implement eco-friendly manufacturing processes to minimize our environmental impact.'
+    details: 'We use recycled materials in packaging and some internal components. The machine is designed for easy disassembly and recycling at end-of-life.'
   },
   {
-    icon: <Sparkles className="h-6 w-6 text-green-600" />,
+    icon: <Recycle className="h-6 w-6 text-green-600" />,
     title: 'Recycling Program',
     description: 'End-of-life product management.',
-    details: 'We offer a comprehensive recycling program for our products, ensuring that materials are properly recycled or repurposed at the end of their lifecycle.'
+    details: 'We offer a comprehensive recycling program. Return your old machine to us or any participating retailer for proper recycling and receive a discount on your next purchase.'
   }
 ]
 
 const handlingSteps: Step[] = [
   {
-    icon: <Settings className="h-6 w-6 text-blue-600" />,
-    title: 'Shipping',
-    description: 'Careful packaging and delivery.',
-    details: 'Our products are carefully packaged to prevent damage during shipping. We use eco-friendly packaging materials whenever possible.'
+    icon: <Droplet className="h-6 w-6 text-blue-600" />,
+    title: 'Water Management',
+    description: 'Efficient water usage and filtration.',
+    details: 'The machine includes a water filtration system to improve taste and reduce scale buildup. It also features a water-saving mode for more efficient brewing.'
   },
   {
-    icon: <ShoppingBag className="h-6 w-6 text-blue-600" />,
-    title: 'Home Setup',
-    description: 'Easy installation in your space.',
-    details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
-    pdfLink: '/assembly-instructions.pdf'
+    icon: <ThermometerSun className="h-6 w-6 text-blue-600" />,
+    title: 'Temperature Control',
+    description: 'Precise heating for perfect brewing.',
+    details: 'Advanced temperature control ensures water is heated to the optimal range of 92°C to 96°C for extracting the best flavor from your coffee beans.'
   }
 ]
 
 const productDetails = {
-  id: '123456789',
-  manufacturer: 'GreenFurniture Co.',
+  id: 'CM5000X',
+  manufacturer: 'EcoBrew Technologies',
   materialComposition: [
     {
-      materialType: 'Wood',
-      source: 'FSC-certified Oak',
-      sustainabilityCertification: 'FSC',
-      percentage: 70,
-      subcomponents: [
-        { name: 'Frame', material: 'Oak', source: 'FSC-certified' },
-        { name: 'Legs', material: 'Oak', source: 'FSC-certified' },
-      ]
-    },
-    {
-      materialType: 'Metal',
+      materialType: 'Stainless Steel',
       source: 'Recycled Steel',
       sustainabilityCertification: 'ISO 14001',
-      percentage: 20,
+      percentage: 60,
       subcomponents: [
-        { name: 'Screws', material: 'Steel', source: 'Recycled' },
-        { name: 'Hinges', material: 'Steel', source: 'Recycled' },
+        { name: 'Body', material: 'Stainless Steel', source: 'Recycled' },
+        { name: 'Water Tank', material: 'Stainless Steel', source: 'Recycled' },
       ]
     },
     {
-      materialType: 'Textile',
-      source: 'Natural Fibers',
-      sustainabilityCertification: 'GOTS',
+      materialType: 'Plastic',
+      source: 'Partially Recycled ABS',
+      sustainabilityCertification: 'EPEAT',
+      percentage: 30,
+      subcomponents: [
+        { name: 'Control Panel', material: 'ABS', source: 'Partially Recycled' },
+        { name: 'Internal Components', material: 'ABS', source: 'Partially Recycled' },
+      ]
+    },
+    {
+      materialType: 'Electronics',
+      source: 'Various',
+      sustainabilityCertification: 'RoHS Compliant',
       percentage: 10,
       subcomponents: [
-        { name: 'Cushion Cover', material: 'Cotton', source: 'Organic' },
-        { name: 'Padding', material: 'Wool', source: 'Organic' },
+        { name: 'Circuit Board', material: 'Various', source: 'New Materials' },
+        { name: 'Sensors', material: 'Various', source: 'New Materials' },
       ]
     },
   ],
   healthAndSafety: {
-    chemicalUse: 'Water-based, low-VOC finishes and adhesives',
-    safetyCertifications: ['CE marking', 'EN 1021 (Furniture - Assessment of the ignitability of upholstered furniture)'],
-    allergenInformation: 'May contain natural latex in cushioning'
+    chemicalUse: 'BPA-free plastics, lead-free solder',
+    safetyCertifications: ['CE', 'UL', 'NSF Certified'],
+    allergenInformation: 'Produced in a facility that processes milk products'
   },
   consumerInformation: {
-    careInstructions: 'Vacuum regularly. Spot clean with mild soap and water. Professional cleaning recommended for stubborn stains.',
-    assemblyInstructions: 'https://example.com/assembly-guide.pdf',
-    warranty: '5-year limited warranty covering manufacturing defects',
-    disassemblyInstructions: 'https://example.com/disassembly-guide.pdf',
+    careInstructions: 'Clean after each use. Descale monthly or as indicated by the machine. Use filtered water for best results.',
+    assemblyInstructions: 'https://example.com/coffee-machine-setup.pdf',
+    warranty: '2-year limited warranty covering manufacturing defects',
+    disassemblyInstructions: 'https://example.com/coffee-machine-recycling.pdf',
     repairServices: 'Contact our customer service for authorized repair centers in your area'
   },
   sustainabilityAndCircularEconomy: {
-    recyclability: '90%',
-    recycledContent: '25%',
-    reusePotential: 'High. Can be refurbished or repurposed. See our guide for ideas: https://example.com/reuse-guide',
-    repairabilityScore: '8/10',
-    endOfLifeInstructions: 'Disassemble for wood and metal recycling at certified centers. Textile components can be composted or recycled depending on local facilities.',
-    takeback: 'Available in select regions. Visit our website for details on our furniture take-back program.'
+    recyclability: '85%',
+    recycledContent: '40%',
+    reusePotential: 'Components can be repurposed. See our guide for ideas: https://example.com/upcycling-guide',
+    repairabilityScore: '7/10',
+    endOfLifeInstructions: 'Disassemble for electronics and metal recycling. Plastic components can be recycled where facilities exist.',
+    takeback: 'Available in all regions. Visit our website for details on our appliance take-back program.'
   },
   environmentalImpact: {
-    carbonFootprint: '30kg CO2',
-    waterUsage: '50 liters',
-    energy: '200 kWh'
+    carbonFootprint: '15kg CO2e (production and shipping)',
+    waterUsage: '100 liters (production)',
+    energy: '1000 kWh/year (estimated usage)'
   },
-  certifications: ['FSC', 'ISO 14001', 'GOTS']
+  certifications: ['Energy Star', 'EPEAT Gold', 'Fair Trade Certified']
 }
 
-export default function ProductJourney() {
+export default function CoffeeMachinePassport() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
-  const couponCode = 'LOYALTY15'
+  const couponCode = 'ECOCOFFEE20'
   const [isBrowser, setIsBrowser] = useState(false)
 
   useEffect(() => {
@@ -150,7 +149,7 @@ export default function ProductJourney() {
   }, [])
 
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 max-w-sm mx-auto">
+    <div className="space-y-4 w-full max-w-sm mx-auto">
       {steps.map((step, index) => (
         <Collapsible 
           key={index}
@@ -159,15 +158,15 @@ export default function ProductJourney() {
         >
           <Card className="border-none shadow-sm">
             <CardContent className="p-4">
-              <CollapsibleTrigger className="flex items-center justify-between w-full">
-                <div className="flex items-center w-full">
+              <CollapsibleTrigger className="flex items-start justify-between w-full">
+                <div className="flex items-start">
                   <div className="mr-4 p-2 bg-gray-100 rounded-full">{step.icon}</div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-center">{step.title}</h3>
-                    <p className="text-sm text-gray-600 text-center">{step.description}</p>
+                  <div>
+                    <h3 className="text-lg font-semibold">{step.title}</h3>
+                    <p className="text-sm text-gray-600">{step.description}</p>
                   </div>
                 </div>
-                <div className="ml-4">
+                <div className="ml-4 mt-2">
                   {expandedStep === index ? 
                     <ChevronUp className="h-5 w-5 text-gray-500" /> : 
                     <ChevronDown className="h-5 w-5 text-gray-500" />
@@ -175,7 +174,7 @@ export default function ProductJourney() {
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-4">
-                <p className="text-gray-700 text-center">{step.details}</p>
+                <p className="text-gray-700">{step.details}</p>
                 {step.pdfLink && (
                   <div className="flex justify-center mt-2">
                     <Button variant="outline" asChild>
@@ -194,7 +193,7 @@ export default function ProductJourney() {
   )
 
   const renderDetailSection = (title: string, icon: React.ReactNode, description: string, content: React.ReactNode) => (
-    <Collapsible className="mt-4">
+    <Collapsible className="mt-4 w-full max-w-sm mx-auto">
       <Card className="border-none shadow-sm">
         <CardContent className="p-4">
           <CollapsibleTrigger className="flex items-center justify-between w-full">
@@ -221,29 +220,28 @@ export default function ProductJourney() {
         toast(
           <div>
             <strong>Coupon code copied</strong>
-            <p>Use for a 15% discount.</p>
+            <p>Use for a 20% discount on eco-friendly coffee pods.</p>
           </div>
         )
       })
     }
   }
 
-
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg rounded-lg overflow-hidden bg-white text-gray-900">
       <CardContent className="p-0">
-        <div className="bg-gradient-to-r from-blue-600/90 to-blue-800/90 backdrop-blur-md text-white p-4 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-25 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0DovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNMTUgMTVMMjAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgNDVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgMTVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnP')]"></div>
+        <div className="bg-gradient-to-r from-green-600/90 to-green-800/90 backdrop-blur-md text-white p-4 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-25 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNMTUgMTVMMjAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgNDVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgMTVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==')]"></div>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2 transition-transform duration-300 hover:scale-105">
-              <Box className="h-8 w-8 text-white" />
-              <span className="text-2xl font-bold">DigiPP</span>
+              <Coffee className="h-8 w-8 text-white" />
+              <span className="text-2xl font-bold">EcoBrew</span>
             </div>
             <div className="text-xs">
-              © 2024 SoftGroup
+              © 2024 EcoBrew Tech
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-center mt-2">Discover Your Product's Story</h2>
+          <h2 className="text-xl font-semibold text-center mt-2">Discover Your Coffee Machine's Journey</h2>
         </div>
         
         <div className="flex justify-center items-center p-2 bg-gray-50 sticky top-0 z-10 shadow-md w-full">
@@ -254,8 +252,8 @@ export default function ProductJourney() {
               onClick={() => setActiveSection('product')}
             >
               <div className="flex flex-col items-center">
-                <ShoppingBag className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`} />
-                <span className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
+                <Coffee className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`} />
+                <span  className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
               </div>
             </Button>
             <Button 
@@ -281,14 +279,14 @@ export default function ProductJourney() {
           </div>
         </div>
         
-        <div className="p-4">
-          <h2 className="text-3xl font-bold mb-2 text-gray-800">Discover your</h2>
-          <h1 className="text-4xl font-bold mb-6 text-primary">Product's Journey</h1>
+        <div className="p-4 w-full max-w-sm mx-auto">
+          <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
+          <h1 className="text-4xl font-bold mb-6 text-primary">Coffee Machine's Story</h1>
           
           <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
             <Image 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mjEAzcEcSHx_HiSyGmIZT_788eb4cd2ecc45b2bf60495927b125a6-poXYOMB78R8Mv2HchIzWj3JbHlsIRA.png" 
-              alt="Brown leather sofa"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yo6oX3eq1tgaZsF3oGYzu_e42a410015ab42168d266a5aff589069-4a8Jst7p1N3uv146ZTM0rC0URkPAtQ.png" 
+              alt="Modern stainless steel coffee machine"
               width={800}
               height={600}
               layout="responsive"
@@ -311,7 +309,7 @@ export default function ProductJourney() {
                 {renderDetailSection(
                   "Product Details",
                   <Info className="h-5 w-5 text-primary" />,
-                  "Comprehensive information about the product's composition and features",
+                  "Comprehensive information about the coffee machine's composition and features",
                   <Tabs defaultValue="composition" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
                       <TabsTrigger value="composition">Composition</TabsTrigger>
@@ -346,7 +344,7 @@ export default function ProductJourney() {
                       <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                         <dt className="font-semibold">Care Instructions:</dt>
                         <dd>{productDetails.consumerInformation.careInstructions}</dd>
-                        <dt className="font-semibold">Assembly Guide:</dt>
+                        <dt className="font-semibold">Setup Guide:</dt>
                         <dd>
                           <a href={productDetails.consumerInformation.assemblyInstructions} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
                             Download PDF
@@ -354,7 +352,7 @@ export default function ProductJourney() {
                         </dd>
                         <dt className="font-semibold">Warranty:</dt>
                         <dd>{productDetails.consumerInformation.warranty}</dd>
-                        <dt className="font-semibold">Disassembly Guide:</dt>
+                        <dt className="font-semibold">Recycling Guide:</dt>
                         <dd>
                           <a href={productDetails.consumerInformation.disassemblyInstructions} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
                             Download PDF
@@ -393,8 +391,8 @@ export default function ProductJourney() {
           <div className="mt-12 bg-gradient-to-r from-primary/5 to-primary/10 p-8 rounded-lg shadow-sm">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
-                <h3 className="text-2xl font-semibold text-primary mb-2">Loyalty Rewards</h3>
-                <p className="text-sm text-gray-600">Enjoy 15% off your next purchase</p>
+                <h3 className="text-2xl font-semibold text-primary mb-2">Eco Rewards</h3>
+                <p className="text-sm text-gray-600">Enjoy 20% off eco-friendly coffee pods</p>
               </div>
               <div className="flex items-center">
                 <Input 
@@ -416,7 +414,7 @@ export default function ProductJourney() {
 
           <div className="mt-8 bg-secondary/5 p-6 rounded-lg shadow-sm">
             <h3 className="text-2xl font-semibold mb-3 text-primary">Special Offer</h3>
-            <p className="mb-4 text-gray-700">Limited time offer: Get a matching ottoman at 50% off with your sofa purchase!</p>
+            <p className="mb-4 text-gray-700">Limited time offer: Get a set of reusable coffee filters at 50% off with your machine purchase!</p>
             <Button variant="secondary" className="w-full">Shop Now</Button>
           </div>
           
