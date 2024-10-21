@@ -2,9 +2,11 @@ import React from 'react';
 
 const StickyText: React.FC<{ text: string }> = ({ text }) => {
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-black text-white text-sm py-2 text-center z-[9999]">
+    <div className="fixed top-0 right-0 h-screen w-6 bg-gray-800 text-white text-[10px] flex items-center justify-center ">
+    <div className="transform -rotate-90 whitespace-nowrap origin-center">
       {text}
     </div>
+  </div>
   );
 };
 
