@@ -26,19 +26,19 @@ type Step = {
 
 const productSteps: Step[] = [
   {
-    icon: <Coffee className="h-6 w-6 text-primary" />,
+    icon: <Coffee className="h-6 w-6 text-violet-500" />,
     title: 'Product Descrtiption',
     description: 'High-quality coffee machine with smart features.',
     details: 'Our coffee machine features precision brewing technology, adjustable settings for various coffee types, and a sleek stainless steel design for durability and style.'
   },
   {
-    icon: <Zap className="h-6 w-6 text-primary" />,
+    icon: <Zap className="h-6 w-6 text-violet-500" />,
     title: 'Energy Efficiency',
     description: 'Designed for optimal energy use.',
     details: 'This coffee machine is rated A+++ for energy efficiency, with an auto-shutoff feature and low-power standby mode to minimize electricity consumption.'
   },
   {
-    icon: <Settings className="h-6 w-6 text-primary" />,
+    icon: <Settings className="h-6 w-6 text-violet-500" />,
     title: 'Maintenance',
     description: 'Easy care for long-lasting performance.',
     details: 'Regular cleaning and descaling ensure optimal performance. The machine has a self-cleaning function and removable parts for easy maintenance.'
@@ -269,8 +269,8 @@ export default function CoffeeMachinePassport() {
               onClick={() => setActiveSection('product')}
             >
               <div className="flex flex-col items-center">
-                <Coffee className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`} />
-                <span className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
+                <Coffee className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-violet-500' : 'text-gray-600'}`} />
+                <span className={`text-xs font-medium ${activeSection === 'product' ? 'text-violet-500' : 'text-gray-600'}`}>Product</span>
               </div>
             </Button>
             <Button
@@ -309,7 +309,7 @@ export default function CoffeeMachinePassport() {
               <div className="mt-8 space-y-4">
                 {renderDetailSection(
                   "Product Details",
-                  <Info className="h-5 w-5 text-primary" />,
+                  <Info className="h-6 w-6 text-violet-500" />,
                   "Comprehensive information about the coffee machine's composition and features",
                   <Tabs defaultValue="composition" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
@@ -372,7 +372,7 @@ export default function CoffeeMachinePassport() {
                 )}
                 {renderDetailSection(
                   "Health & Safety",
-                  <Shield className="h-5 w-5 text-primary" />,
+                  <Shield className="h-5 w-5 text-violet-500" />,
                   "Important information about product safety and potential health impacts",
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
                     <dt className="font-semibold">Chemical Use:</dt>
