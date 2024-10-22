@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 
-const MapComponent = dynamic(() => import('@/components/MapComponent'), { 
+const MapComponent = dynamic(() => import('@/components/MapComponent'), {
   ssr: false,
   loading: () => <div className="h-64 w-full bg-gray-100 animate-pulse" />
 })
@@ -25,21 +25,21 @@ type Step = {
 };
 
 const productSteps: Step[] = [
-  { 
+  {
     icon: <Coffee className="h-6 w-6 text-primary" />,
-    title: 'Product Descrtiption', 
+    title: 'Product Descrtiption',
     description: 'High-quality coffee machine with smart features.',
     details: 'Our coffee machine features precision brewing technology, adjustable settings for various coffee types, and a sleek stainless steel design for durability and style.'
   },
-  { 
+  {
     icon: <Zap className="h-6 w-6 text-primary" />,
-    title: 'Energy Efficiency', 
+    title: 'Energy Efficiency',
     description: 'Designed for optimal energy use.',
     details: 'This coffee machine is rated A+++ for energy efficiency, with an auto-shutoff feature and low-power standby mode to minimize electricity consumption.'
   },
-  { 
+  {
     icon: <Settings className="h-6 w-6 text-primary" />,
-    title: 'Maintenance', 
+    title: 'Maintenance',
     description: 'Easy care for long-lasting performance.',
     details: 'Regular cleaning and descaling ensure optimal performance. The machine has a self-cleaning function and removable parts for easy maintenance.'
   },
@@ -151,7 +151,7 @@ export default function CoffeeMachinePassport() {
   const renderSteps = (steps: Step[]) => (
     <div className="space-y-4 w-full max-w-sm mx-auto">
       {steps.map((step, index) => (
-        <Collapsible 
+        <Collapsible
           key={index}
           open={expandedStep === index}
           onOpenChange={() => setExpandedStep(expandedStep === index ? null : index)}
@@ -167,8 +167,8 @@ export default function CoffeeMachinePassport() {
                   </div>
                 </div>
                 <div className="ml-4 mt-2">
-                  {expandedStep === index ? 
-                    <ChevronUp className="h-5 w-5 text-gray-500" /> : 
+                  {expandedStep === index ?
+                    <ChevronUp className="h-5 w-5 text-gray-500" /> :
                     <ChevronDown className="h-5 w-5 text-gray-500" />
                   }
                 </div>
@@ -238,27 +238,44 @@ export default function CoffeeMachinePassport() {
               <span className="text-2xl font-bold">EcoBrew</span>
             </div>
             <div className="text-xs">
-              © 2024 EcoBrew Tech
+              © 2024 By SoftGroup
             </div>
           </div>
           <h2 className="text-xl font-semibold text-center mt-2">Discover Your Coffee Machine's Journey</h2>
         </div>
-        
-        <div className="flex justify-center items-center p-2 bg-gray-50 sticky top-0 z-10 shadow-md w-full">
-          <div className="flex justify-center space-x-1 w-full max-w-sm bg-gray-100 rounded-lg p-1">
-            <Button 
+
+
+
+        <div className="p-4">
+          <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
+          <h1 className="text-4xl font-bold mb-6 text-primary">Coffee Machine's Story</h1>
+
+          <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yo6oX3eq1tgaZsF3oGYzu_e42a410015ab42168d266a5aff589069-4a8Jst7p1N3uv146ZTM0rC0URkPAtQ.png"
+              alt="Modern stainless steel coffee machine"
+              width={800}
+              height={600}
+              layout="responsive"
+              className="transition-transform duration-300 hover:scale-105"
+            />
+          </div>
+
+
+          <div className="flex justify-center space-x-1 w-full max-w-full bg-gray-100 rounded-lg p-1">
+            <Button
               variant="ghost"
-              className={`flex-1 ${activeSection === 'product' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
+              className={`flex-1 ${activeSection === 'product' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} h-12 rounded-md transition-all duration-200`}
               onClick={() => setActiveSection('product')}
             >
               <div className="flex flex-col items-center">
                 <Coffee className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`} />
-                <span  className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
+                <span className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
               </div>
             </Button>
-            <Button 
+            <Button
               variant="ghost"
-              className={`flex-1 ${activeSection === 'impact' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
+              className={`flex-1 ${activeSection === 'impact' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} h-12 rounded-md transition-all duration-200`}
               onClick={() => setActiveSection('impact')}
             >
               <div className="flex flex-col items-center">
@@ -266,9 +283,9 @@ export default function CoffeeMachinePassport() {
                 <span className={`text-xs font-medium ${activeSection === 'impact' ? 'text-green-600' : 'text-gray-600'}`}>Impact</span>
               </div>
             </Button>
-            <Button 
+            <Button
               variant="ghost"
-              className={`flex-1 ${activeSection === 'handling' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
+              className={`flex-1 ${activeSection === 'handling' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} h-12 rounded-md transition-all duration-200`}
               onClick={() => setActiveSection('handling')}
             >
               <div className="flex flex-col items-center">
@@ -277,31 +294,15 @@ export default function CoffeeMachinePassport() {
               </div>
             </Button>
           </div>
-        </div>
-        
-        <div className="p-4 w-full max-w-sm mx-auto">
-          <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
-          <h1 className="text-4xl font-bold mb-6 text-primary">Coffee Machine's Story</h1>
-          
-          <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
-            <Image 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yo6oX3eq1tgaZsF3oGYzu_e42a410015ab42168d266a5aff589069-4a8Jst7p1N3uv146ZTM0rC0URkPAtQ.png" 
-              alt="Modern stainless steel coffee machine"
-              width={800}
-              height={600}
-              layout="responsive"
-              className="transition-transform duration-300 hover:scale-105"
-            />
-          </div>
-          
+
           <div className="sticky top-16 bg-white z-10 py-4 mb-6 border-b border-gray-200">
             <h3 className="text-2xl font-semibold text-primary">
-              {activeSection === 'product' ? 'Product Information' : 
-               activeSection === 'impact' ? 'Environmental Impact' : 
-               'Handling and Care'}
+              {activeSection === 'product' ? 'Product Information' :
+                activeSection === 'impact' ? 'Environmental Impact' :
+                  'Handling and Care'}
             </h3>
           </div>
-          
+
           {activeSection === 'product' && (
             <>
               {renderSteps(productSteps)}
@@ -322,7 +323,7 @@ export default function CoffeeMachinePassport() {
                         <dd>{productDetails.id}</dd>
                         <dt className="font-semibold">Manufacturer:</dt>
                         <dd>{productDetails.manufacturer}</dd>
-                        
+
                         {productDetails.materialComposition.map((material, index) => (
                           <React.Fragment key={index}>
                             <dt className="font-semibold col-span-2 mt-2">{material.materialType} ({material.percentage}%):</dt>
@@ -387,37 +388,42 @@ export default function CoffeeMachinePassport() {
           )}
           {activeSection === 'impact' && renderSteps(impactSteps)}
           {activeSection === 'handling' && renderSteps(handlingSteps)}
-          
-          <div className="mt-12 bg-gradient-to-r from-primary/5 to-primary/10 p-8 rounded-lg shadow-sm">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-4 md:mb-0">
-                <h3 className="text-2xl font-semibold text-primary mb-2">Eco Rewards</h3>
-                <p className="text-sm text-gray-600">Enjoy 20% off eco-friendly coffee pods</p>
-              </div>
-              <div className="flex items-center">
-                <Input 
-                  value={couponCode} 
-                  readOnly 
-                  className="w-32 mr-2 bg-white/50 border border-primary/20 focus:border-primary text-center"
-                />
-                <Button 
-                  onClick={copyToClipboard} 
-                  variant="outline" 
-                  size="icon" 
-                  className="bg-white/50 border border-primary/20 hover:bg-primary/10 hover:border-primary transition-colors"
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
+
+          <div className="mt-8 space-y-4">
+            <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4 rounded-lg shadow-sm">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-primary">Eco Rewards</h3>
+                  <p className="text-xs text-gray-600">Enjoy 20% off eco-friendly <br />coffee pods</p>
+                </div>
+                <div className="flex items-center">
+                  <Input
+                    value={couponCode}
+                    readOnly
+                    className="w-28 mr-2 text-xs bg-white/50 border border-primary/20 focus:border-primary text-center"
+                  />
+                  <Button
+                    onClick={copyToClipboard}
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8 bg-white/50 border border-primary/20 hover:bg-primary/10 hover:border-primary transition-colors"
+                  >
+                    <Copy className="h-3 w-3" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 bg-secondary/5 p-6 rounded-lg shadow-sm">
-            <h3 className="text-2xl font-semibold mb-3 text-primary">Special Offer</h3>
-            <p className="mb-4 text-gray-700">Limited time offer: Get a set of reusable coffee filters at 50% off with your machine purchase!</p>
-            <Button variant="secondary" className="w-full">Shop Now</Button>
+          <div className="bg-secondary/5 p-4 rounded-lg shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-semibold text-primary">Special Offer</h3>
+                <p className="text-xs text-gray-700">Limited time offer: Get a set of reusable coffee filters at 50% off with your machine purchase!</p>
+              </div>
+              <Button variant="secondary" size="sm">Shop Now</Button>
+            </div>
           </div>
-          
         </div>
       </CardContent>
     </Card>
