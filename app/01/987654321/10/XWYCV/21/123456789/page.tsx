@@ -27,7 +27,7 @@ type Step = {
 const productSteps: Step[] = [
   { 
     icon: <Coffee className="h-6 w-6 text-primary" />,
-    title: 'Product Details', 
+    title: 'Product Descrtiption', 
     description: 'High-quality coffee machine with smart features.',
     details: 'Our coffee machine features precision brewing technology, adjustable settings for various coffee types, and a sleek stainless steel design for durability and style.'
   },

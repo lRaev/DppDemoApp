@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box } from 'lucide-react'
+import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -228,65 +228,31 @@ export default function ProductJourney() {
     }
   }
 
-
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg rounded-lg overflow-hidden bg-white text-gray-900">
       <CardContent className="p-0">
-      <div className="bg-gradient-to-r from-blue-600/90 to-blue-700/60 backdrop-blur-md text-white p-2 relative overflow-hidden">
-      <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-0 transition-transform duration-300 hover:scale-105">
+        <div className="bg-gradient-to-r from-blue-600/90 to-blue-800/90 backdrop-blur-md text-white p-1 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-25 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0DovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNMTUgMTVMMjAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgNDVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgMTVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnP')]"></div>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-1 transition-transform duration-300 hover:scale-105">
               <Image
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Furnitures-aBYqzHe2jKqqfnnzrmOSolTeYZ1muS.png"
                 alt="DigiPP Logo"
-                width={60}
-                height={60}
+                width={70}
+                height={70}
               />
-              <span className="text-m italic">by SoftGroup</span>
+              <span className="text-s italic">by SoftGroup</span>
             </div>
-         </div>
-          <h2 className="text-l font-semibold text-left mt-2">Discover Your Product's Story</h2>
-        </div>
-        
-        <div className="flex justify-center items-center p-2 bg-gray-50 sticky top-0 z-10 shadow-md w-full">
-          <div className="flex justify-center space-x-1 w-full max-w-sm bg-gray-100 rounded-lg p-1">
-            <Button 
-              variant="ghost"
-              className={`flex-1 ${activeSection === 'product' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
-              onClick={() => setActiveSection('product')}
-            >
-              <div className="flex flex-col items-center">
-                <ShoppingBag className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`} />
-                <span className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
-              </div>
-            </Button>
-            <Button 
-              variant="ghost"
-              className={`flex-1 ${activeSection === 'impact' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
-              onClick={() => setActiveSection('impact')}
-            >
-              <div className="flex flex-col items-center">
-                <Leaf className={`h-4 w-4 mb-1 ${activeSection === 'impact' ? 'text-green-600' : 'text-gray-600'}`} />
-                <span className={`text-xs font-medium ${activeSection === 'impact' ? 'text-green-600' : 'text-gray-600'}`}>Impact</span>
-              </div>
-            </Button>
-            <Button 
-              variant="ghost"
-              className={`flex-1 ${activeSection === 'handling' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
-              onClick={() => setActiveSection('handling')}
-            >
-              <div className="flex flex-col items-center">
-                <HandHelping className={`h-4 w-4 mb-1 ${activeSection === 'handling' ? 'text-blue-600' : 'text-gray-600'}`} />
-                <span className={`text-xs font-medium ${activeSection === 'handling' ? 'text-blue-600' : 'text-gray-600'}`}>Handling</span>
-              </div>
-            </Button>
+            
           </div>
+          
         </div>
         
         <div className="p-4">
           <h2 className="text-3xl font-bold mb-2 text-gray-800">Discover your</h2>
           <h1 className="text-4xl font-bold mb-6 text-primary">Product's Journey</h1>
           
-          <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
+          <div className="relative w-full mb-2 rounded-lg overflow-hidden shadow-lg">
             <Image 
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mjEAzcEcSHx_HiSyGmIZT_788eb4cd2ecc45b2bf60495927b125a6-poXYOMB78R8Mv2HchIzWj3JbHlsIRA.png" 
               alt="Brown leather sofa"
@@ -296,14 +262,41 @@ export default function ProductJourney() {
               className="transition-transform duration-300 hover:scale-105"
             />
           </div>
+
           
-          <div className="sticky top-16 bg-white z-10 py-4 mb-6 border-b border-gray-200">
-            <h3 className="text-2xl font-semibold text-primary">
-              {activeSection === 'product' ? 'Product Information' : 
-               activeSection === 'impact' ? 'Environmental Impact' : 
-               'Handling and Care'}
-            </h3>
-          </div>
+            <div className="flex justify-center space-x-1 w-full max-w-full bg-gray-100 rounded-lg p-1">
+              <Button 
+                variant="ghost"
+                className={`flex-1 ${activeSection === 'product' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
+                onClick={() => setActiveSection('product')}
+              >
+                <div className="flex flex-col items-center">
+                  <ShoppingBag className={`h-4 w-4 mb-1 ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`} />
+                  <span className={`text-xs font-medium ${activeSection === 'product' ? 'text-primary' : 'text-gray-600'}`}>Product</span>
+                </div>
+              </Button>
+              <Button 
+                variant="ghost"
+                className={`flex-1 ${activeSection === 'impact' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
+                onClick={() => setActiveSection('impact')}
+              >
+                <div className="flex flex-col items-center">
+                  <Leaf className={`h-4 w-4 mb-1 ${activeSection === 'impact' ? 'text-green-600' : 'text-gray-600'}`} />
+                  <span className={`text-xs font-medium ${activeSection === 'impact' ? 'text-green-600' : 'text-gray-600'}`}>Impact</span>
+                </div>
+              </Button>
+              <Button 
+                variant="ghost"
+                className={`flex-1 ${activeSection === 'handling' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'} rounded-md transition-all duration-200`}
+                onClick={() => setActiveSection('handling')}
+              >
+                <div className="flex flex-col items-center">
+                  <HandHelping className={`h-4 w-4 mb-1 ${activeSection === 'handling' ? 'text-blue-600' : 'text-gray-600'}`} />
+                  <span className={`text-xs font-medium ${activeSection === 'handling' ? 'text-blue-600' : 'text-gray-600'}`}>Handling</span>
+                </div>
+              </Button>
+            </div>
+        
           
           {activeSection === 'product' && (
             <>
@@ -391,34 +384,40 @@ export default function ProductJourney() {
           {activeSection === 'impact' && renderSteps(impactSteps)}
           {activeSection === 'handling' && renderSteps(handlingSteps)}
           
-          <div className="mt-12 bg-gradient-to-r from-primary/5 to-primary/10 p-8 rounded-lg shadow-sm">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="mb-4 md:mb-0">
-                <h3 className="text-2xl font-semibold text-primary mb-2">Loyalty Rewards</h3>
-                <p className="text-sm text-gray-600">Enjoy 15% off your next purchase</p>
-              </div>
-              <div className="flex items-center">
-                <Input 
-                  value={couponCode} 
-                  readOnly 
-                  className="w-32 mr-2 bg-white/50 border border-primary/20 focus:border-primary text-center"
-                />
-                <Button 
-                  onClick={copyToClipboard} 
-                  variant="outline" 
-                  size="icon" 
-                  className="bg-white/50 border border-primary/20 hover:bg-primary/10 hover:border-primary transition-colors"
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
+          <div className="mt-8 space-y-4">
+            <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-4 rounded-lg shadow-sm">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-primary">Loyalty Rewards</h3>
+                  <p className="text-xs text-gray-600">15% off next purchase</p>
+                </div>
+                <div className="flex items-center">
+                  <Input 
+                    value={couponCode} 
+                    readOnly 
+                    className="w-24 mr-2 text-xs bg-white/50 border border-primary/20 focus:border-primary text-center"
+                  />
+                  <Button 
+                    onClick={copyToClipboard} 
+                    variant="outline" 
+                    size="icon" 
+                    className="h-8 w-8 bg-white/50 border border-primary/20 hover:bg-primary/10 hover:border-primary transition-colors"
+                  >
+                    <Copy className="h-3 w-3" />
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-8 bg-secondary/5 p-6 rounded-lg shadow-sm">
-            <h3 className="text-2xl font-semibold mb-3 text-primary">Special Offer</h3>
-            <p className="mb-4 text-gray-700">Limited time offer: Get a matching ottoman at 50% off with your sofa purchase!</p>
-            <Button variant="secondary" className="w-full">Shop Now</Button>
+            <div className="bg-secondary/5 p-4 rounded-lg shadow-sm">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold text-primary">Special Offer</h3>
+                  <p className="text-xs text-gray-700">50% off matching ottoman</p>
+                </div>
+                <Button variant="secondary" size="sm">Shop Now</Button>
+              </div>
+            </div>
           </div>
           
         </div>

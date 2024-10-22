@@ -27,7 +27,7 @@ type Step = {
 const productSteps: Step[] = [
   { 
     icon: <ShoppingBag className="h-6 w-6 text-primary" />,
-    title: 'Product Details', 
+    title: 'Product Descrtiption',
     description: 'High-quality leather sofa with premium craftsmanship.',
     details: 'Our leather sofa is made from top-grain leather, featuring a sturdy hardwood frame and high-resilience foam cushions for ultimate comfort and durability.'
   },
