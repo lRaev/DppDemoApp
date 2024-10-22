@@ -10,11 +10,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { MarkerData } from '@/components/MapComponentMarkers'
 
-const MapComponent = dynamic(() => import('@/components/MapComponent'), {
+
+const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
   ssr: false,
-  loading: () => <div className="h-64 w-full bg-gray-100 animate-pulse" />
+  loading: () => <div className="h-64 w-full bg-gray-200 animate-pulse"></div>
 })
+
+const demoMarkers: MarkerData[] = [
+  { position: [62.593341,-101.777344], popupContent: "Wood Origin: Canada", type: 'origin' },
+  { position: [60.128162, 18.643501], popupContent: "Steel Origin: Sweden", type: 'origin' },
+  { position: [20.593683, 78.962883], popupContent: "Steel Origin: India", type: 'origin' },
+  { position: [42.73, 25.48], popupContent: "Manufactured  in Sofia, Bulgaria", type: 'manufacturer'}
+  
+];
 
 type Step = {
   icon: React.ReactNode;
@@ -367,7 +377,7 @@ export default function ProductJourney() {
                     </TabsContent>
                     <TabsContent value="location">
                       <div className="h-64 w-full">
-                        {isBrowser && <MapComponent />}
+                        {isBrowser && <MapComponentMarkers markers={demoMarkers} />}
                       </div>
                     </TabsContent>
                   </Tabs>

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -9,12 +9,19 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { toast } from 'sonner'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import { MarkerData } from '@/components/MapComponentMarkers'
 
-// Dynamically import MapComponent with SSR disabled
-const MapComponent = dynamic(() => import('@/components/MapComponent'), { 
+const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
   ssr: false,
-  loading: () => <div className="h-64 w-full bg-gray-100 animate-pulse" />
+  loading: () => <div className="h-64 w-full bg-gray-200 animate-pulse"></div>
 })
+
+const markers: MarkerData[] = [
+  { position: [42.73, 25.48], popupContent: "Product Origin: Sofia, Bulgaria", type: 'origin' },
+  { position: [52.52, 13.40], popupContent: "Distribution Center: Berlin, Germany", type: 'distribution' },
+  { position: [48.85, 2.35], popupContent: "Retail Store: Paris, France", type: 'manufacturer' },
+  { position: [40.71, -74.01], popupContent: "Retail Store: New York, USA", type: 'manufacturer' },
+];
 
 type Step = {
   icon: React.ReactNode;
@@ -27,7 +34,7 @@ type Step = {
 const productSteps: Step[] = [
   { 
     icon: <ShoppingBag className="h-6 w-6 text-primary" />,
-    title: 'Product Descrtiption',
+    title: 'Product Description',
     description: 'High-quality leather sofa with premium craftsmanship.',
     details: 'Our leather sofa is made from top-grain leather, featuring a sturdy hardwood frame and high-resilience foam cushions for ultimate comfort and durability.'
   },
@@ -80,6 +87,11 @@ export default function ProductJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
   const couponCode = 'LOYALTY15'
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const renderSteps = (steps: Step[]) => (
     <div className="space-y-4 max-w-sm mx-auto">
@@ -126,7 +138,7 @@ export default function ProductJourney() {
   )
 
   const copyToClipboard = () => {
-    if (typeof window !== 'undefined') {
+    if (isMounted) {
       navigator.clipboard.writeText(couponCode).then(() => {
         toast(
           <div>
@@ -139,10 +151,9 @@ export default function ProductJourney() {
   }
 
   return (
-    
     <Card className="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
       <div className="relative h-64">
-        <MapComponent />
+        <MapComponentMarkers markers={markers}/>
       </div>
       <CardContent className="p-0">
         <div className="flex justify-around p-2 bg-gray-50">

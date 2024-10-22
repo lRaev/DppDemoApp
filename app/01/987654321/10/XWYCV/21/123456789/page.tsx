@@ -10,11 +10,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { MarkerData } from '@/components/MapComponentMarkers'
 
-const MapComponent = dynamic(() => import('@/components/MapComponent'), {
+
+const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
   ssr: false,
-  loading: () => <div className="h-64 w-full bg-gray-100 animate-pulse" />
+  loading: () => <div className="h-64 w-full bg-gray-200 animate-pulse"></div>
 })
+
+const demoMarkers: MarkerData[] = [
+  { position: [42.73, 25.48], popupContent: "Product Origin: Sofia, Bulgaria", type: 'origin' },
+  { position: [52.52, 13.40], popupContent: "Distribution Center: Berlin, Germany", type: 'distribution' },
+  { position: [48.85, 2.35], popupContent: "Retail Store: Paris, France", type: 'manufacturer' },
+  { position: [40.71, -74.01], popupContent: "Retail Store: New York, USA", type: 'manufacturer' },
+];
 
 type Step = {
   icon: React.ReactNode;
@@ -365,7 +374,7 @@ export default function CoffeeMachinePassport() {
                     </TabsContent>
                     <TabsContent value="location">
                       <div className="h-64 w-full">
-                        {isBrowser && <MapComponent />}
+                        {isBrowser && <MapComponentMarkers markers ={demoMarkers} />}
                       </div>
                     </TabsContent>
                   </Tabs>
