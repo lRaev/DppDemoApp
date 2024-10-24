@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Coffee, Leaf, Truck,  Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
+import { Coffee, Leaf, Truck, PackageOpen ,Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -67,6 +67,12 @@ const impactSteps: Step[] = [
     title: 'Recycling Program',
     description: 'End-of-life product management.',
     details: 'We offer a comprehensive recycling program. Return your old machine to us or any participating retailer for proper recycling and receive a discount on your next purchase.'
+  },
+  {
+    icon: <PackageOpen className="h-6 w-6 text-green-600" />,
+    title: 'Packaging Materials',
+    description: 'ESPR-compliant packaging composition.',
+    details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements (ESPR).'
   }
 ]
 
@@ -92,8 +98,8 @@ const handlingSteps: Step[] = [
   }
 ]
 const renderEcoCertificates = () => (
-  <div className="space-y-4 mt-6">
-    <h4 className="text-lg font-semibold">Eco Certificates</h4>
+  <div className="space--4 mt-6">
+    <h4 className="text-m font-semibold">Eco Certificates</h4>
     <div className="flex flex-wrap gap-2">
       {productDetails.certifications.map((cert, index) => (
         <span
@@ -113,21 +119,21 @@ const renderEnvironmentalImpact = () => (
       <Card className="p-4 flex flex-col items-center">
         <Truck className="h-8 w-8 text-blue-500 mb-2" />
         <span className="text-sm font-medium">CO2 </span>
-        <span className="text-lg font-bold">
+        <span className="text-m font-bold">
           {productDetails.environmentalImpact.carbonFootprintSh} kg
         </span>
       </Card>
       <Card className="p-4 flex flex-col items-center">
         <Droplet className="h-8 w-8 text-blue-500 mb-2" />
         <span className="text-sm font-medium">Water Usage</span>
-        <span className="text-lg font-bold">
+        <span className="text-m font-bold">
           {productDetails.environmentalImpact.waterUsageSh} L
         </span>
       </Card>
       <Card className="p-4 flex flex-col items-center">
         <Zap className="h-8 w-8 text-yellow-500 mb-2" />
         <span className="text-sm font-medium">Energy</span>
-        <span className="text-lg font-bold">
+        <span className="text-m font-bold">
           {productDetails.environmentalImpact.energySh} kWh
         </span>
       </Card>
@@ -190,6 +196,11 @@ const productDetails = {
     endOfLifeInstructions: 'Disassemble for electronics and metal recycling. Plastic components can be recycled where facilities exist.',
     takeback: 'Available in all regions. Visit our website for details on our appliance take-back program.'
   },
+  packagingMaterials: [
+    { material: 'Corrugated Cardboard', percentage: 70, recycledContent: 100, recyclability: 'Widely Recyclable' },
+    { material: 'Molded Pulp', percentage: 20, recycledContent: 100, recyclability: 'Biodegradable' },
+    { material: 'Low-Density Polyethylene (LDPE)', percentage: 10, recycledContent: 30, recyclability: 'Check Locally' }
+  ],
   environmentalImpact: {
     carbonFootprint: '15kg CO2e (production and shipping)',
     waterUsage: '100 liters (production)',
@@ -246,6 +257,22 @@ export default function CoffeeMachinePassport() {
                       </a>
                     </Button>
                   </div>
+                )},
+                {step.title === 'Packaging Materials' && (
+                  <div className="mt-4">
+                    <h4 className="font-semibold mb-2">Packaging Composition:</h4>
+                    <ul className="list-disc pl-5 space-y-2">
+                      {productDetails.packagingMaterials.map((material, index) => (
+                        <li key={index}>
+                          <span className="font-medium">{material.material}</span>: {material.percentage}%
+                          <ul className="list-none pl-4 mt-1">
+                            <li>Recycled Content: {material.recycledContent}%</li>
+                            <li>Recyclability: {material.recyclability}</li>
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </CollapsibleContent>
             </CardContent>
@@ -254,7 +281,22 @@ export default function CoffeeMachinePassport() {
       ))}
     </div>
   )
-
+  const renderPackageInfo = () => {
+    <div className="mt-4">
+                    <h4 className="font-semibold mb-2">Packaging Composition:</h4>
+                    <ul className="list-disc pl-5 space-y-2">
+                      {productDetails.packagingMaterials.map((material, index) => (
+                        <li key={index}>
+                          <span className="font-medium">{material.material}</span>: {material.percentage}%
+                          <ul className="list-none pl-4 mt-1">
+                            <li>Recycled Content: {material.recycledContent}%</li>
+                            <li>Recyclability: {material.recyclability}</li>
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                }
   const renderDetailSection = (title: string, icon: React.ReactNode, description: string, content: React.ReactNode) => (
     <Collapsible className="mt-4 w-full max-w-sm mx-auto">
       <Card className="border-none shadow-sm">
@@ -452,6 +494,7 @@ export default function CoffeeMachinePassport() {
          {activeSection === "impact" && (
             <>
               {renderSteps(impactSteps)}
+              {renderPackageInfo}
               <div className="mt-8">
                 {renderEnvironmentalImpact()}
                 {renderEcoCertificates()}

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import {
   ShoppingBag,
   Leaf,
+  PackageOpen,
   Truck,
   ChevronDown,
   ChevronUp,
@@ -160,6 +161,11 @@ const productDetails = {
     endOfLifeInstructions:
       "Return to any of our stores for recycling, or use our mail-in recycling program.",
   },
+  packagingMaterials: [
+    { material: 'Corrugated Cardboard', percentage: 70, recycledContent: 100, recyclability: 'Widely Recyclable' },
+    { material: 'Molded Pulp', percentage: 20, recycledContent: 100, recyclability: 'Biodegradable' },
+    { material: 'Low-Density Polyethylene (LDPE)', percentage: 10, recycledContent: 30, recyclability: 'Check Locally' }
+  ],
   environmentalImpact: {
     carbonFootprint: "3.5",
     waterUsage: "87",
@@ -184,6 +190,23 @@ export default function WorkJacketJourney() {
     setIsBrowser(true);
   }, []);
 
+  const renderPackageInfo = () => {
+    <div className="mt-4">
+                    <h4 className="font-semibold mb-2">Packaging Composition:</h4>
+                    <ul className="list-disc pl-5 space-y-2">
+                      {productDetails.packagingMaterials.map((material, index) => (
+                        <li key={index}>
+                          <span className="font-medium">{material.material}</span>: {material.percentage}%
+                          <ul className="list-none pl-4 mt-1">
+                            <li>Recycled Content: {material.recycledContent}%</li>
+                            <li>Recyclability: {material.recyclability}</li>
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                }
+
   const renderEnvironmentalImpact = () => (
     <div className="space-y-4">
       <h4 className="text-lg font-semibold">Environmental Impact</h4>
@@ -191,21 +214,21 @@ export default function WorkJacketJourney() {
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
           <span className="text-sm font-medium">CO2 </span>
-          <span className="text-lg font-bold">
+          <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprint} kg
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
           <span className="text-sm font-medium">Water Usage</span>
-          <span className="text-lg font-bold">
+          <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsage} L
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
           <span className="text-sm font-medium">Energy</span>
-          <span className="text-lg font-bold">
+          <span className="text-m font-bold">
             {productDetails.environmentalImpact.energy} kWh
           </span>
         </Card>
@@ -256,6 +279,12 @@ export default function WorkJacketJourney() {
       description: "Our eco-friendly certifications.",
       details: renderEcoCertificates(),
     },
+    {
+      icon: <PackageOpen className="h-6 w-6 text-green-600" />,
+      title: 'Packaging Materials',
+      description: 'ESPR-compliant packaging composition.',
+      details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements (ESPR).'
+    }
   ];
 
   const renderSteps = (steps: Step[]) => (
@@ -309,6 +338,22 @@ export default function WorkJacketJourney() {
                         Download PDF Guide
                       </a>
                     </Button>
+                  </div>
+                )}
+                ,{step.title === 'Packaging Materials' && (
+                  <div className="mt-4">
+                    <h4 className="font-semibold mb-2">Packaging Composition:</h4>
+                    <ul className="list-disc pl-5 space-y-2">
+                      {productDetails.packagingMaterials.map((material, index) => (
+                        <li key={index}>
+                          <span className="font-medium">{material.material}</span>: {material.percentage}%
+                          <ul className="list-none pl-4 mt-1">
+                            <li>Recycled Content: {material.recycledContent}%</li>
+                            <li>Recyclability: {material.recyclability}</li>
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </CollapsibleContent>
@@ -603,6 +648,7 @@ export default function WorkJacketJourney() {
           {activeSection === "impact" && (
             <>
               {renderSteps(impactSteps)}
+              {renderPackageInfo}
               <div className="mt-8">
                 {renderEnvironmentalImpact()}
                 {renderEcoCertificates()}
