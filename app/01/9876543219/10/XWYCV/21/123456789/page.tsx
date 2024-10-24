@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Coffee, Leaf, Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box } from 'lucide-react'
+import { Coffee, Leaf, Truck,  Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -24,6 +24,7 @@ const demoMarkers: MarkerData[] = [
   { position: [48.85, 2.35], popupContent: "Retail Store: Paris, France", type: 'manufacturer' },
   { position: [40.71, -74.01], popupContent: "Retail Store: New York, USA", type: 'manufacturer' },
 ];
+
 
 type Step = {
   icon: React.ReactNode;
@@ -71,6 +72,13 @@ const impactSteps: Step[] = [
 
 const handlingSteps: Step[] = [
   {
+    icon: <UserRoundCog className="h-6 w-6 text-blue-600" />,
+    title: 'User Guide',
+    description: 'Setup and enjoy your cup of coffee.',
+    details: 'Folow the instructions to set up your coffee machine and brew your first cup. Download the user guide for detailed instructions.',
+    pdfLink: '/assembly-instructions.pdf'
+  },
+  {
     icon: <Droplet className="h-6 w-6 text-blue-600" />,
     title: 'Water Management',
     description: 'Efficient water usage and filtration.',
@@ -83,7 +91,49 @@ const handlingSteps: Step[] = [
     details: 'Advanced temperature control ensures water is heated to the optimal range of 92°C to 96°C for extracting the best flavor from your coffee beans.'
   }
 ]
-
+const renderEcoCertificates = () => (
+  <div className="space-y-4 mt-6">
+    <h4 className="text-lg font-semibold">Eco Certificates</h4>
+    <div className="flex flex-wrap gap-2">
+      {productDetails.certifications.map((cert, index) => (
+        <span
+          key={index}
+          className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+        >
+          {cert}
+        </span>
+      ))}
+    </div>
+  </div>
+);
+const renderEnvironmentalImpact = () => (
+  <div className="space-y-4">
+    <h4 className="text-lg font-semibold">Environmental Impact</h4>
+    <div className="grid grid-cols-3 gap-4">
+      <Card className="p-4 flex flex-col items-center">
+        <Truck className="h-8 w-8 text-blue-500 mb-2" />
+        <span className="text-sm font-medium">CO2 </span>
+        <span className="text-lg font-bold">
+          {productDetails.environmentalImpact.carbonFootprintSh} kg
+        </span>
+      </Card>
+      <Card className="p-4 flex flex-col items-center">
+        <Droplet className="h-8 w-8 text-blue-500 mb-2" />
+        <span className="text-sm font-medium">Water Usage</span>
+        <span className="text-lg font-bold">
+          {productDetails.environmentalImpact.waterUsageSh} L
+        </span>
+      </Card>
+      <Card className="p-4 flex flex-col items-center">
+        <Zap className="h-8 w-8 text-yellow-500 mb-2" />
+        <span className="text-sm font-medium">Energy</span>
+        <span className="text-lg font-bold">
+          {productDetails.environmentalImpact.energySh} kWh
+        </span>
+      </Card>
+    </div>
+  </div>
+);
 const productDetails = {
   id: 'CM5000X',
   manufacturer: 'EcoBrew Technologies',
@@ -119,6 +169,7 @@ const productDetails = {
       ]
     },
   ],
+  
   healthAndSafety: {
     chemicalUse: 'BPA-free plastics, lead-free solder',
     safetyCertifications: ['CE', 'UL', 'NSF Certified'],
@@ -142,7 +193,10 @@ const productDetails = {
   environmentalImpact: {
     carbonFootprint: '15kg CO2e (production and shipping)',
     waterUsage: '100 liters (production)',
-    energy: '1000 kWh/year (estimated usage)'
+    energy: '1000 kWh/year (estimated usage)',
+    carbonFootprintSh: '115',
+    waterUsageSh: '100',
+    energySh: '210'
   },
   certifications: ['Energy Star', 'EPEAT Gold', 'Fair Trade Certified']
 }
@@ -395,7 +449,15 @@ export default function CoffeeMachinePassport() {
               </div>
             </>
           )}
-          {activeSection === 'impact' && renderSteps(impactSteps)}
+         {activeSection === "impact" && (
+            <>
+              {renderSteps(impactSteps)}
+              <div className="mt-8">
+                {renderEnvironmentalImpact()}
+                {renderEcoCertificates()}
+              </div>
+            </>
+          )}
           {activeSection === 'handling' && renderSteps(handlingSteps)}
 
           <div className="mt-8 space-y-4">

@@ -83,6 +83,13 @@ const handlingSteps: Step[] = [
     description: 'Easy installation in your space.',
     details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
     pdfLink: '/assembly-instructions.pdf'
+  },
+  {
+    icon: <ShoppingBag className="h-6 w-6 text-blue-600" />,
+    title: 'Technical Specifications',
+    description: 'Easy installation in your space.',
+    details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
+    pdfLink: '/assembly-instructions.pdf'
   }
 ]
 
