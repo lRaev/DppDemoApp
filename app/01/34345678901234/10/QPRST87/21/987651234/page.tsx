@@ -8,11 +8,13 @@ import {
   Truck,
   ChevronDown,
   ChevronUp,
+  Lightbulb,
   Copy,
   Tag,
   Sparkles,
   Info,
   Shield,
+  Recycle,
   MapPin,
   Settings,
   HandHelping,
@@ -96,20 +98,20 @@ const productSteps: Step[] = [
 
 const handlingSteps: Step[] = [
   {
-    icon: <Settings className="h-6 w-6 text-blue-600" />,
+    icon: <Truck className="h-6 w-6 text-blue-600" />,
     title: "Shipping",
     description: "Efficient and eco-friendly delivery.",
     details:
       "We use minimal packaging made from recycled materials. Our shipping partners are chosen based on their commitment to reducing carbon emissions.",
   },
   {
-    icon: <ShoppingBag className="h-6 w-6 text-blue-600" />,
+    icon: <Lightbulb className="h-6 w-6 text-blue-600" />,
     title: "Usage Tips",
     description: "Get the most out of your work jacket.",
     details:
       "Break in your jacket for maximum comfort. Utilize all pockets for efficient tool organization. For extreme weather, consider layering underneath.",
-    pdfLink: "/usage-guide.pdf",
-  },
+    pdfLink: "/usage-guide.pdf"
+  }
 ];
 
 const productDetails = {
@@ -261,7 +263,7 @@ export default function WorkJacketJourney() {
         "We use organic cotton and recycled polyester in our jackets. Our manufacturing process is designed to minimize water usage and reduce chemical waste.",
     },
     {
-      icon: <Sparkles className="h-6 w-6 text-green-600" />,
+      icon: <Recycle className="h-6 w-6 text-green-600" />,
       title: "Recycling Program",
       description: "End-of-life product management.",
       details:
@@ -282,8 +284,8 @@ export default function WorkJacketJourney() {
     {
       icon: <PackageOpen className="h-6 w-6 text-green-600" />,
       title: 'Packaging Materials',
-      description: 'ESPR-compliant packaging composition.',
-      details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements (ESPR).'
+      description: 'ECO packaging composition.',
+      details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements.'
     }
   ];
 
@@ -340,7 +342,7 @@ export default function WorkJacketJourney() {
                     </Button>
                   </div>
                 )}
-                ,{step.title === 'Packaging Materials' && (
+                {step.title === 'Packaging Materials' && (
                   <div className="mt-4">
                     <h4 className="font-semibold mb-2">Packaging Composition:</h4>
                     <ul className="list-disc pl-5 space-y-2">

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { ShoppingBag, Leaf, Truck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box } from 'lucide-react'
+import { ShoppingBag, Leaf, Truck, Recycle, PackageCheck ,ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -63,7 +63,7 @@ const impactSteps: Step[] = [
     details: 'We use responsibly sourced materials and implement eco-friendly manufacturing processes to minimize our environmental impact.'
   },
   {
-    icon: <Sparkles className="h-6 w-6 text-green-600" />,
+    icon: <Recycle className="h-6 w-6 text-green-600" />,
     title: 'Recycling Program',
     description: 'End-of-life product management.',
     details: 'We offer a comprehensive recycling program for our products, ensuring that materials are properly recycled or repurposed at the end of their lifecycle.'
@@ -73,23 +73,23 @@ const impactSteps: Step[] = [
 const handlingSteps: Step[] = [
   {
     icon: <Settings className="h-6 w-6 text-blue-600" />,
-    title: 'Shipping',
-    description: 'Careful packaging and delivery.',
-    details: 'Our products are carefully packaged to prevent damage during shipping. We use eco-friendly packaging materials whenever possible.'
-  },
-  {
-    icon: <ShoppingBag className="h-6 w-6 text-blue-600" />,
     title: 'Home Setup',
     description: 'Easy installation in your space.',
     details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
     pdfLink: '/assembly-instructions.pdf'
   },
   {
-    icon: <ShoppingBag className="h-6 w-6 text-blue-600" />,
+    icon: <Info className="h-6 w-6 text-blue-600" />,
     title: 'Technical Specifications',
     description: 'Easy installation in your space.',
     details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
     pdfLink: '/assembly-instructions.pdf'
+  },
+  {
+    icon: <PackageCheck className="h-6 w-6 text-blue-600" />,
+    title: 'Shipping',
+    description: 'Careful packaging and delivery.',
+    details: 'Our products are carefully packaged to prevent damage during shipping. We use eco-friendly packaging materials whenever possible.'
   }
 ]
 

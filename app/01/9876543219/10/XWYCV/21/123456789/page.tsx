@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Coffee, Leaf, Truck, PackageOpen ,Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
+import { Coffee, Leaf, Truck, PackageOpen, Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -11,7 +11,6 @@ import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { MarkerData } from '@/components/MapComponentMarkers'
-
 
 const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
   ssr: false,
@@ -25,7 +24,6 @@ const demoMarkers: MarkerData[] = [
   { position: [40.71, -74.01], popupContent: "Retail Store: New York, USA", type: 'manufacturer' },
 ];
 
-
 type Step = {
   icon: React.ReactNode;
   title: string;
@@ -37,7 +35,7 @@ type Step = {
 const productSteps: Step[] = [
   {
     icon: <Coffee className="h-6 w-6 text-violet-500" />,
-    title: 'Product Descrtiption',
+    title: 'Product Description',
     description: 'High-quality coffee machine with smart features.',
     details: 'Our coffee machine features precision brewing technology, adjustable settings for various coffee types, and a sleek stainless steel design for durability and style.'
   },
@@ -71,8 +69,8 @@ const impactSteps: Step[] = [
   {
     icon: <PackageOpen className="h-6 w-6 text-green-600" />,
     title: 'Packaging Materials',
-    description: 'ESPR-compliant packaging composition.',
-    details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements (ESPR).'
+    description: 'ECO packaging composition.',
+    details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements. We use materials that are easily recyclable and have high recycled content.'
   }
 ]
 
@@ -81,7 +79,7 @@ const handlingSteps: Step[] = [
     icon: <UserRoundCog className="h-6 w-6 text-blue-600" />,
     title: 'User Guide',
     description: 'Setup and enjoy your cup of coffee.',
-    details: 'Folow the instructions to set up your coffee machine and brew your first cup. Download the user guide for detailed instructions.',
+    details: 'Follow the instructions to set up your coffee machine and brew your first cup. Download the user guide for detailed instructions.',
     pdfLink: '/assembly-instructions.pdf'
   },
   {
@@ -97,49 +95,7 @@ const handlingSteps: Step[] = [
     details: 'Advanced temperature control ensures water is heated to the optimal range of 92°C to 96°C for extracting the best flavor from your coffee beans.'
   }
 ]
-const renderEcoCertificates = () => (
-  <div className="space--4 mt-6">
-    <h4 className="text-m font-semibold">Eco Certificates</h4>
-    <div className="flex flex-wrap gap-2">
-      {productDetails.certifications.map((cert, index) => (
-        <span
-          key={index}
-          className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
-        >
-          {cert}
-        </span>
-      ))}
-    </div>
-  </div>
-);
-const renderEnvironmentalImpact = () => (
-  <div className="space-y-4">
-    <h4 className="text-lg font-semibold">Environmental Impact</h4>
-    <div className="grid grid-cols-3 gap-4">
-      <Card className="p-4 flex flex-col items-center">
-        <Truck className="h-8 w-8 text-blue-500 mb-2" />
-        <span className="text-sm font-medium">CO2 </span>
-        <span className="text-m font-bold">
-          {productDetails.environmentalImpact.carbonFootprintSh} kg
-        </span>
-      </Card>
-      <Card className="p-4 flex flex-col items-center">
-        <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-        <span className="text-sm font-medium">Water Usage</span>
-        <span className="text-m font-bold">
-          {productDetails.environmentalImpact.waterUsageSh} L
-        </span>
-      </Card>
-      <Card className="p-4 flex flex-col items-center">
-        <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-        <span className="text-sm font-medium">Energy</span>
-        <span className="text-m font-bold">
-          {productDetails.environmentalImpact.energySh} kWh
-        </span>
-      </Card>
-    </div>
-  </div>
-);
+
 const productDetails = {
   id: 'CM5000X',
   manufacturer: 'EcoBrew Technologies',
@@ -175,7 +131,6 @@ const productDetails = {
       ]
     },
   ],
-  
   healthAndSafety: {
     chemicalUse: 'BPA-free plastics, lead-free solder',
     safetyCertifications: ['CE', 'UL', 'NSF Certified'],
@@ -215,32 +170,33 @@ const productDetails = {
 export default function CoffeeMachinePassport() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
-  const couponCode = 'ECOCOFFEE20'
   const [isBrowser, setIsBrowser] = useState(false)
+  const couponCode = 'ECOCOFFEE20'
 
   useEffect(() => {
     setIsBrowser(true)
   }, [])
 
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 w-full max-w-sm mx-auto">
+    <div className="space-y-4 w-full max-w-sm mx-auto flex flex-col items-center">
       {steps.map((step, index) => (
         <Collapsible
           key={index}
           open={expandedStep === index}
           onOpenChange={() => setExpandedStep(expandedStep === index ? null : index)}
+          className="w-full"
         >
-          <Card className="border-none shadow-sm">
+          <Card className="border-none shadow-sm w-full">
             <CardContent className="p-4">
-              <CollapsibleTrigger className="flex items-start justify-between w-full">
-                <div className="flex items-start">
-                  <div className="mr-4 p-2 bg-gray-100 rounded-full">{step.icon}</div>
-                  <div>
+              <CollapsibleTrigger className="flex items-center justify-between w-full">
+                <div className="flex items-center w-full">
+                  <div className="mr-4 p-2 bg-gray-100 rounded-full flex-shrink-0">{step.icon}</div>
+                  <div className="flex-grow">
                     <h3 className="text-lg font-semibold">{step.title}</h3>
                     <p className="text-sm text-gray-600">{step.description}</p>
                   </div>
                 </div>
-                <div className="ml-4 mt-2">
+                <div className="ml-4 flex-shrink-0">
                   {expandedStep === index ?
                     <ChevronUp className="h-5 w-5 text-gray-500" /> :
                     <ChevronDown className="h-5 w-5 text-gray-500" />
@@ -248,32 +204,25 @@ export default function CoffeeMachinePassport() {
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-4">
-                <p className="text-gray-700">{step.details}</p>
-                {step.pdfLink && (
-                  <div className="flex justify-center mt-2">
-                    <Button variant="outline" asChild>
-                      <a href={step.pdfLink} target="_blank" rel="noopener noreferrer">
-                        Download PDF Guide
-                      </a>
-                    </Button>
-                  </div>
-                )},
-                {step.title === 'Packaging Materials' && (
-                  <div className="mt-4">
-                    <h4 className="font-semibold mb-2">Packaging Composition:</h4>
-                    <ul className="list-disc pl-5 space-y-2">
-                      {productDetails.packagingMaterials.map((material, index) => (
-                        <li key={index}>
-                          <span className="font-medium">{material.material}</span>: {material.percentage}%
-                          <ul className="list-none pl-4 mt-1">
-                            <li>Recycled Content: {material.recycledContent}%</li>
-                            <li>Recyclability: {material.recyclability}</li>
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <div className="pl-14">
+                  <p className="text-gray-700">{step.details}</p>
+                  {step.title === 'Packaging Materials' && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold mb-2">Packaging Composition:</h4>
+                      <ul className="list-disc pl-5 space-y-2">
+                        {productDetails.packagingMaterials.map((material, index) => (
+                          <li key={index}>
+                            <span className="font-medium">{material.material}</span>: {material.percentage}%
+                            <ul className="list-none pl-4 mt-1">
+                              <li>Recycled Content: {material.recycledContent}%</li>
+                              <li>Recyclability: {material.recyclability}</li>
+                            </ul>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </CollapsibleContent>
             </CardContent>
           </Card>
@@ -281,35 +230,66 @@ export default function CoffeeMachinePassport() {
       ))}
     </div>
   )
-  const renderPackageInfo = () => {
-    <div className="mt-4">
-                    <h4 className="font-semibold mb-2">Packaging Composition:</h4>
-                    <ul className="list-disc pl-5 space-y-2">
-                      {productDetails.packagingMaterials.map((material, index) => (
-                        <li key={index}>
-                          <span className="font-medium">{material.material}</span>: {material.percentage}%
-                          <ul className="list-none pl-4 mt-1">
-                            <li>Recycled Content: {material.recycledContent}%</li>
-                            <li>Recyclability: {material.recyclability}</li>
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                }
+
+
+  const renderEcoCertificates = () => (
+    <div className="space-y-4 mt-6 w-full max-w-sm mx-auto text-center">
+      <h4 className="text-m font-semibold">Eco Certificates</h4>
+      <div className="flex flex-wrap justify-center gap-2">
+        {productDetails.certifications.map((cert, index) => (
+          <span
+            key={index}
+            className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+          >
+            {cert}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+
+  const renderEnvironmentalImpact = () => (
+    <div className="space-y-4 w-full max-w-sm mx-auto text-center">
+      <h4 className="text-lg font-semibold">Environmental Impact</h4>
+      <div className="grid grid-cols-3 gap-4">
+        <Card className="p-4 flex flex-col items-center">
+          <Truck className="h-8 w-8 text-blue-500 mb-2" />
+          <span className="text-sm font-medium">CO2 </span>
+          <span className="text-m font-bold">
+            {productDetails.environmentalImpact.carbonFootprintSh} kg
+          </span>
+        </Card>
+        <Card className="p-4 flex flex-col items-center">
+          <Droplet className="h-8 w-8 text-blue-500 mb-2" />
+          <span className="text-sm font-medium">Water Usage</span>
+          <span className="text-m font-bold">
+            {productDetails.environmentalImpact.waterUsageSh} L
+          </span>
+        </Card>
+        <Card className="p-4 flex flex-col items-center">
+          <Zap className="h-8 w-8 text-yellow-500 mb-2" />
+          <span className="text-sm font-medium">Energy</span>
+          <span className="text-m font-bold">
+            {productDetails.environmentalImpact.energySh} kWh
+          </span>
+        </Card>
+      </div>
+    </div>
+  )
+
   const renderDetailSection = (title: string, icon: React.ReactNode, description: string, content: React.ReactNode) => (
     <Collapsible className="mt-4 w-full max-w-sm mx-auto">
-      <Card className="border-none shadow-sm">
+      <Card className="border-none shadow-sm w-full">
         <CardContent className="p-4">
           <CollapsibleTrigger className="flex items-center justify-between w-full">
             <div className="flex items-center w-full">
-              <div className="mr-4 p-2 bg-gray-100 rounded-full">{icon}</div>
+              <div className="mr-4 p-2 bg-gray-100 rounded-full flex-shrink-0">{icon}</div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold">{title}</h3>
                 <p className="text-sm text-gray-600">{description}</p>
               </div>
             </div>
-            <ChevronDown className="h-5 w-5 text-gray-500" />
+            <ChevronDown className="h-5 w-5 text-gray-500 flex-shrink-0" />
           </CollapsibleTrigger>
           <CollapsibleContent className="pt-4">
             {content}
@@ -349,8 +329,6 @@ export default function CoffeeMachinePassport() {
           <h2 className="text-xl font-semibold text-center mt-2">Discover Your Coffee Machine's Journey</h2>
         </div>
 
-
-
         <div className="p-4">
           <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
           <h1 className="text-4xl font-bold mb-6 text-primary">Coffee Machine's Story</h1>
@@ -365,7 +343,6 @@ export default function CoffeeMachinePassport() {
               className="transition-transform duration-300 hover:scale-105"
             />
           </div>
-
 
           <div className="flex justify-center space-x-1 w-full max-w-full bg-gray-100 rounded-lg p-1">
             <Button
@@ -470,7 +447,7 @@ export default function CoffeeMachinePassport() {
                     </TabsContent>
                     <TabsContent value="location">
                       <div className="h-64 w-full">
-                        {isBrowser && <MapComponentMarkers markers ={demoMarkers} />}
+                        {isBrowser && <MapComponentMarkers markers={demoMarkers} />}
                       </div>
                     </TabsContent>
                   </Tabs>
@@ -491,16 +468,17 @@ export default function CoffeeMachinePassport() {
               </div>
             </>
           )}
-         {activeSection === "impact" && (
+
+          {activeSection === "impact" && (
             <>
               {renderSteps(impactSteps)}
-              {renderPackageInfo}
               <div className="mt-8">
                 {renderEnvironmentalImpact()}
                 {renderEcoCertificates()}
               </div>
             </>
           )}
+
           {activeSection === 'handling' && renderSteps(handlingSteps)}
 
           <div className="mt-8 space-y-4">
