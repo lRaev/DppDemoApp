@@ -254,21 +254,21 @@ export default function CoffeeMachinePassport() {
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-sm font-medium">CO2 </span>
+          <span className="text-xs font-medium">CO2 </span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprintSh} kg
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-sm font-medium">Water Usage</span>
+          <span className="text-xs font-medium">Water Usage</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsageSh} L
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-          <span className="text-sm font-medium">Energy</span>
+          <span className="text-xs font-medium">Energy</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.energySh} kWh
           </span>

@@ -211,25 +211,24 @@ export default function WorkJacketJourney() {
 
   const renderEnvironmentalImpact = () => (
     <div className="space-y-4">
-      <h4 className="text-lg font-semibold">Environmental Impact</h4>
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-sm font-medium">CO2 </span>
+          <span className="text-xs font-medium">CO2 </span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprint} kg
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-sm font-medium">Water Usage</span>
+          <span className="text-xs font-medium">Water Usage</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsage} L
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-          <span className="text-sm font-medium">Energy</span>
+          <span className="text-xs font-medium">Energy</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.energy} kWh
           </span>
@@ -651,10 +650,6 @@ export default function WorkJacketJourney() {
             <>
               {renderSteps(impactSteps)}
               {renderPackageInfo}
-              <div className="mt-8">
-                {renderEnvironmentalImpact()}
-                {renderEcoCertificates()}
-              </div>
             </>
           )}
           {activeSection === "handling" && renderSteps(handlingSteps)}
