@@ -167,7 +167,7 @@ export default function ProductJourney() {
   }, [])
 
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 max-w-sm mx-auto">
+    <div className="space-y-4 mx-auto">
       {steps.map((step, index) => (
         <Collapsible
           key={index}
@@ -211,7 +211,7 @@ export default function ProductJourney() {
   )
 
   const renderDetailSection = (title: string, icon: React.ReactNode, description: string, content: React.ReactNode) => (
-    <Collapsible className="mt-4 w-full max-w-sm mx-auto">
+    <Collapsible className="mt-4 w-full mx-auto">
       <Card className="border-none shadow-sm">
         <CardContent className="p-4">
           <CollapsibleTrigger className="flex items-center justify-between w-full">
@@ -281,7 +281,7 @@ export default function ProductJourney() {
             />
           </div>
 
-          <div className="flex justify-center space-x-1 w-full max-w-sm bg-gray-100 rounded-lg p-1">
+          <div className="flex justify-center space-x-1 w-full bg-gray-100 rounded-lg p-1">
             <Button
               variant="ghost"
               className={`flex-1 ${activeSection === 'product' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}  h-12 rounded-md transition-all duration-200`}
