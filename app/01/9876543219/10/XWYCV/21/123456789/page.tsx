@@ -178,7 +178,7 @@ export default function CoffeeMachinePassport() {
   }, [])
 
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 w-full max-w-sm mx-auto flex flex-col items-center">
+    <div className="space-y-4 w-full mx-auto flex flex-col items-center">
       {steps.map((step, index) => (
         <Collapsible
           key={index}
@@ -233,7 +233,7 @@ export default function CoffeeMachinePassport() {
 
 
   const renderEcoCertificates = () => (
-    <div className="space-y-4 mt-6 w-full max-w-sm mx-auto text-center">
+    <div className="space-y-4 mt-6 w-full mx-auto text-center">
       <h4 className="text-m font-semibold">Eco Certificates</h4>
       <div className="flex flex-wrap justify-center gap-2">
         {productDetails.certifications.map((cert, index) => (
@@ -249,7 +249,7 @@ export default function CoffeeMachinePassport() {
   )
 
   const renderEnvironmentalImpact = () => (
-    <div className="space-y-4 w-full max-w-sm mx-auto text-center">
+    <div className="space-y-4 w-full mx-auto text-center">
       <h4 className="text-lg font-semibold">Environmental Impact</h4>
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
@@ -278,7 +278,7 @@ export default function CoffeeMachinePassport() {
   )
 
   const renderDetailSection = (title: string, icon: React.ReactNode, description: string, content: React.ReactNode) => (
-    <Collapsible className="mt-4 w-full max-w-sm mx-auto">
+    <Collapsible className="mt-4 w-full mx-auto">
       <Card className="border-none shadow-sm w-full">
         <CardContent className="p-4">
           <CollapsibleTrigger className="flex items-center justify-between w-full">

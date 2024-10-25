@@ -290,7 +290,7 @@ export default function WorkJacketJourney() {
   ];
 
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 max-w-sm mx-auto">
+    <div className="space-y-4 mx-auto">
       {steps.map((step, index) => (
         <Collapsible
           key={index}
@@ -372,7 +372,7 @@ export default function WorkJacketJourney() {
     description: string,
     content: React.ReactNode
   ) => (
-    <Collapsible className="mt-4 w-full max-w-sm mx-auto">
+    <Collapsible className="mt-4 w-full mx-auto">
       <Card className="border-none shadow-sm">
         <CardContent className="p-4">
           <CollapsibleTrigger className="flex items-center justify-between w-full">
