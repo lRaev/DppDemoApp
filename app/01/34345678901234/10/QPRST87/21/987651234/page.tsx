@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ShoppingBag,
+  ArrowUp ,
   Leaf,
   Factory,
   PackageOpen,
@@ -188,6 +189,7 @@ type FairLaborCertification = 'SA8000' | 'BSCI' | 'Fair Labor Association';
 export default function WorkJacketJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
   const [activeSection, setActiveSection] = useState("product");
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const couponCode = "WORKWEAR20";
   const [isBrowser, setIsBrowser] = useState(false);
 
@@ -195,6 +197,40 @@ export default function WorkJacketJourney() {
     setIsBrowser(true);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const renderSubcomponents = (subcomponents: any[], level = 0) => (
+    <ul className="list-none space-y-2">
+      {subcomponents.map((sub, subIndex) => (
+        <li key={subIndex} className="flex items-start">
+          <div className="flex items-center">
+            <div className={`w-${3 + level} h-px bg-gray-300 mr-2`}></div>
+            <div className="w-2 h-2 bg-gray-300 rounded-full mr-2"></div>
+          </div>
+          <div>
+            <span className="text-sm text-gray-600">
+              {sub.name}: {sub.material} ({sub.source})
+            </span>
+            {sub.subcomponents && (
+              <div className="ml-4 mt-1">
+                {renderSubcomponents(sub.subcomponents, level + 1)}
+              </div>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
   const renderPackageInfo = () => {
     <div className="mt-4">
                     <h4 className="font-semibold mb-2">Packaging Composition:</h4>
@@ -673,6 +709,7 @@ export default function WorkJacketJourney() {
                     </dd>
                   </dl>
                 )}
+          
               </div>
             </>
           )}
@@ -731,6 +768,17 @@ export default function WorkJacketJourney() {
           </div>
         </div>
       </CardContent>
+      {showScrollTop && (
+        <Button
+          variant="outline"
+          size="icon"
+          className="fixed bottom-4 right-4 rounded-full shadow-md bg-white hover:bg-gray-100 transition-all duration-300"
+          onClick={scrollToTop}
+          aria-label="Return to top"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      )}
     </Card>
   );
 }

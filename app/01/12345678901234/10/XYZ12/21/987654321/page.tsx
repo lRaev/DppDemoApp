@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { ShoppingBag, Leaf, Truck, Recycle, Factory ,PackageCheck ,ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package, Droplet, Zap } from 'lucide-react'
+import { ShoppingBag, Leaf, Truck, ArrowUp, Recycle, Factory ,PackageCheck ,ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package, Droplet, Zap } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -177,12 +177,25 @@ type FairLaborCertification = 'SA8000' | 'BSCI' | 'Fair Labor Association';
 export default function ProductJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
+  const [showScrollTop, setShowScrollTop] = useState(false)
   const couponCode = 'LOYALTY15'
   const [isBrowser, setIsBrowser] = useState(false)
 
   useEffect(() => {
     setIsBrowser(true)
   }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const renderSteps = (steps: Step[]) => (
     <div className="space-y-4 mx-auto">
@@ -327,7 +340,7 @@ export default function ProductJourney() {
     }
   }
 
-
+  
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg rounded-lg overflow-hidden bg-white text-gray-900">
       <CardContent className="p-0">
@@ -536,6 +549,17 @@ export default function ProductJourney() {
 
         </div>
       </CardContent>
+      {showScrollTop && (
+        <Button
+          variant="outline"
+          size="icon"
+          className="fixed bottom-4 right-4 rounded-full shadow-md bg-white hover:bg-gray-100 transition-all duration-300"
+          onClick={scrollToTop}
+          aria-label="Return to top"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      )}
     </Card>
   )
 }

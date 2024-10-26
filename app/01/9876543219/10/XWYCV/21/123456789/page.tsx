@@ -380,7 +380,7 @@ export default function CoffeeMachinePassport() {
                     </div>
                   )}
                   {step.title === 'Energy Efficiency' && (
-                    <div className="mt-4">
+                    <div className="mt-2">
                       <h4 className="font-semibold mb-2">Energy Consumption Comparison:</h4>
                       <ResponsiveContainer width="100%" height={200}>
                         <BarChart data={productDetails.energyComparison}>
