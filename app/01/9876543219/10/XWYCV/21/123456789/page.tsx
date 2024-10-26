@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Coffee, Leaf, Truck, Factory ,PackageOpen, Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
+import { Coffee, Leaf, Truck, PackageOpen, Puzzle,Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog, ArrowUp, Factory, Heart, Wrench, TreeDeciduous, Clock } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,7 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { MarkerData } from '@/components/MapComponentMarkers'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import type { MarkerData } from '@/components/MapComponentMarkers'
 
 const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
   ssr: false,
@@ -77,6 +78,18 @@ const impactSteps: Step[] = [
     title: 'Manufacturing & Fair Labor',
     description: 'Ethical production practices.',
     details: 'Our manufacturing process adheres to strict fair labor standards and environmental regulations. We are committed to ensuring safe working conditions and fair wages throughout our supply chain.'
+  },
+  {
+    icon: <Heart className="h-6 w-6 text-green-600" />,
+    title: 'Social Impact Initiatives',
+    description: 'Supporting communities and workers.',
+    details: 'We actively support programs that improve working conditions in coffee-growing regions and invest in local community development projects.'
+  },
+  {
+    icon: <TreeDeciduous className="h-6 w-6 text-green-600" />,
+    title: 'Carbon Offset Program',
+    description: 'Reducing our carbon footprint.',
+    details: 'We participate in verified carbon offset programs to neutralize the environmental impact of our production and shipping processes.'
   }
 ]
 
@@ -99,6 +112,12 @@ const handlingSteps: Step[] = [
     title: 'Temperature Control',
     description: 'Precise heating for perfect brewing.',
     details: 'Advanced temperature control ensures water is heated to the optimal range of 92°C to 96°C for extracting the best flavor from your coffee beans.'
+  },
+  {
+    icon: <Wrench className="h-6 w-6 text-blue-600" />,
+    title: 'Repair and Longevity',
+    description: 'Built to last, easy to maintain.',
+    details: 'Our coffee machine is designed for a lifespan of 7-10 years with proper care. We offer readily available spare parts and comprehensive repair guides to extend its life even further.'
   }
 ]
 
@@ -132,8 +151,26 @@ const productDetails = {
       sustainabilityCertification: 'RoHS Compliant',
       percentage: 10,
       subcomponents: [
-        { name: 'Circuit Board', material: 'Various', source: 'New Materials' },
-        { name: 'Sensors', material: 'Various', source: 'New Materials' },
+        { 
+          name: 'Circuit Board', 
+          material: 'FR-4', 
+          source: 'New Materials',
+          subcomponents: [
+            { name: 'Copper Traces', material: 'Copper', source: 'Partially Recycled' },
+            { name: 'Solder Mask', material: 'Epoxy', source: 'New Materials' }
+          ]
+        },
+        { name: 'Microprocessor', material: 'Silicon', source: 'New Materials' },
+        { 
+          name: 'Sensors', 
+          material: 'Various', 
+          source: 'New Materials',
+          subcomponents: [
+            { name: 'Temperature Sensor', material: 'Thermocouple', source: 'New Materials' },
+            { name: 'Pressure Sensor', material: 'Piezoelectric', source: 'New Materials' }
+          ]
+        },
+        { name: 'Wiring', material: 'Copper', source: 'Partially Recycled' },
       ]
     },
   ],
@@ -170,23 +207,116 @@ const productDetails = {
     waterUsageSh: '100',
     energySh: '210'
   },
+  certifications: ['Energy Star', 'EPEAT Gold', 'Fair Trade Certified'] as Certification[],
   fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'] as FairLaborCertification[],
-  certifications: ['Energy Star', 'EPEAT Gold', 'Fair Trade Certified']
+  energyComparison: [
+    { name: 'Our Model', energy: 1000 },
+    { name: 'Average Model', energy: 1200 },
+    { name: 'Inefficient Model', energy: 1500 }
+  ],
+  waterEfficiency: {
+    usagePerCup: 150, // in ml
+    industryAverage: 180 // in ml
+  },
+  carbonOffsetProgram: {
+    provider: 'GreenOffset Co.',
+    amountOffset: '20kg CO2e per unit sold',
+    projectType: 'Reforestation in South America'
+  },
+  ecoInnovations: [
+    { name: 'Smart Energy Saver', description: 'Learns your usage patterns to optimize energy consumption' },
+    { name: 'Precision Water Doser', description: 'Reduces water waste by up to 20% compared to standard models' }
+  ],
 }
+
+type Certification = 'Energy Star' | 'EPEAT Gold' | 'Fair Trade Certified';
 type FairLaborCertification = 'SA8000' | 'BSCI' | 'Fair Labor Association';
+
+const renderSubcomponents = (subcomponents: any[], level = 0) => (
+  <ul className="list-none space-y-2">
+    {subcomponents.map((sub, subIndex) => (
+      <li key={subIndex} className="flex items-start">
+        <div className="flex items-center">
+          <div className={`w-${3 + level} h-px bg-gray-300 mr-2`}></div>
+          <div className="w-2 h-2 bg-gray-300 rounded-full mr-2"></div>
+        </div>
+        <div>
+          <span className="text-sm text-gray-600">
+            {sub.name}: {sub.material} ({sub.source})
+          </span>
+          {sub.subcomponents && (
+            <div className="ml-4 mt-1">
+              {renderSubcomponents(sub.subcomponents, level + 1)}
+            </div>
+          )}
+        </div>
+      </li>
+    ))}
+  </ul>
+)
+
+const renderMaterialSourceTimeline = () => (
+  <div className="w-full">
+    <div className="relative">
+      {productDetails.materialComposition.map((material, index) => (
+        <div key={index} className="mb-6">
+          <div className="flex items-center">
+            <div className="w-24 text-right mr-4 text-sm font-semibold">{material.materialType}</div>
+            <div className="w-4 h-4 bg-primary rounded-full"></div>
+            <div className="ml-4">
+              <p className="font-medium">{material.source}</p>
+              <p className="text-sm text-gray-600">{material.sustainabilityCertification}</p>
+            </div>
+          </div>
+          <div className="ml-28 mt-2">
+            {renderSubcomponents(material.subcomponents)}
+          </div>
+        </div>
+      ))}
+      <div className="absolute left-[7rem] top-2 bottom-2 w-px bg-gray-200"></div>
+    </div>
+  </div>
+)
 
 export default function CoffeeMachinePassport() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
   const [activeSection, setActiveSection] = useState('product')
-  const [isBrowser, setIsBrowser] = useState(false)
+  const [showScrollTop, setShowScrollTop] = useState(false)
   const couponCode = 'ECOCOFFEE20'
 
   useEffect(() => {
-    setIsBrowser(true)
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(couponCode).then(() => {
+      toast(
+        <div>
+          <strong>Coupon code copied</strong>
+          <p>Use for a 20% discount on eco-friendly coffee pods.</p>
+        </div>
+      )
+    }).catch((err) => {
+      console.error('Failed to copy: ', err);
+      toast(
+        <div>
+          <strong>Failed to copy</strong>
+          <p>Please try again or copy the code manually.</p>
+        </div>
+      )
+    });
+  }
+
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 mx-auto">
+    <div className="space-y-4 w-full max-w-sm mx-auto flex flex-col items-center">
       {steps.map((step, index) => (
         <Collapsible
           key={index}
@@ -194,7 +324,7 @@ export default function CoffeeMachinePassport() {
           onOpenChange={() => setExpandedStep(expandedStep === index ? null : index)}
           className="w-full"
         >
-          <Card className="border-none shadow-sm">
+          <Card className="border-none shadow-sm w-full">
             <CardContent className="p-4">
               <CollapsibleTrigger className="flex items-center justify-between w-full">
                 <div className="flex items-center w-full">
@@ -220,7 +350,7 @@ export default function CoffeeMachinePassport() {
                       <ul className="list-disc pl-5 space-y-2">
                         {productDetails.packagingMaterials.map((material, index) => (
                           <li key={index}>
-                            <span className="font-medium">{material.material}</span>: {material.percentage}%
+                            <span  className="font-medium">{material.material}</span>: {material.percentage}%
                             <ul className="list-none pl-4 mt-1">
                               <li>Recycled Content: {material.recycledContent}%</li>
                               <li>Recyclability: {material.recyclability}</li>
@@ -230,11 +360,10 @@ export default function CoffeeMachinePassport() {
                       </ul>
                     </div>
                   )}
-                </div>
-                {step.title === 'Manufacturing & Fair Labor' && (
+                  {step.title === 'Manufacturing & Fair Labor' && (
                     <div className="mt-4">
-                      <h4 className="font-semibold pl-10 mb-2">Fair Labor Certifications:</h4>
-                      <ul className="list-disc pl-20 space-y-2">
+                      <h4 className="font-semibold mb-2">Fair Labor Certifications:</h4>
+                      <ul className="list-disc pl-5 space-y-2">
                         {productDetails.fairLaborCertifications.map((cert, index) => (
                           <li key={index}>
                             <a
@@ -250,6 +379,41 @@ export default function CoffeeMachinePassport() {
                       </ul>
                     </div>
                   )}
+                  {step.title === 'Energy Efficiency' && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold mb-2">Energy Consumption Comparison:</h4>
+                      <ResponsiveContainer width="100%" height={200}>
+                        <BarChart data={productDetails.energyComparison}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                          <Legend />
+                          <Bar dataKey="energy" fill="#8884d8" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                      <p className="text-sm text-gray-600 mt-2">Energy consumption in kWh/year</p>
+                    </div>
+                  )}
+                  {step.title === 'Water Management' && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold mb-2">Water Efficiency:</h4>
+                      <p>Water usage per cup: {productDetails.waterEfficiency.usagePerCup}ml</p>
+                      <p>Industry average: {productDetails.waterEfficiency.industryAverage}ml</p>
+                      <p className="text-sm text-gray-600 mt-2">
+                        Our machine uses {((1 - productDetails.waterEfficiency.usagePerCup / productDetails.waterEfficiency.industryAverage) * 100).toFixed(1)}% less water than the industry average.
+                      </p>
+                    </div>
+                  )}
+                  {step.title === 'Carbon Offset Program' && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold mb-2">Carbon Offset Details:</h4>
+                      <p>Provider: {productDetails.carbonOffsetProgram.provider}</p>
+                      <p>Amount Offset: {productDetails.carbonOffsetProgram.amountOffset}</p>
+                      <p>Project Type: {productDetails.carbonOffsetProgram.projectType}</p>
+                    </div>
+                  )}
+                </div>
               </CollapsibleContent>
             </CardContent>
           </Card>
@@ -258,9 +422,8 @@ export default function CoffeeMachinePassport() {
     </div>
   )
 
-
   const renderEcoCertificates = () => (
-    <div className="space-y-4 mt-6 w-full mx-auto text-center">
+    <div className="space-y-4 mt-6 w-full max-w-sm mx-auto text-center">
       <h4 className="text-m font-semibold">Eco Certificates</h4>
       <div className="flex flex-wrap justify-center gap-2">
         {productDetails.certifications.map((cert, index) => (
@@ -279,26 +442,26 @@ export default function CoffeeMachinePassport() {
   )
 
   const renderEnvironmentalImpact = () => (
-    <div className="space-y-4 w-full mx-auto text-center">
+    <div className="space-y-4 w-full max-w-sm mx-auto text-center">
       <h4 className="text-lg font-semibold">Environmental Impact</h4>
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-xs font-medium">CO2 </span>
+          <span className="text-sm font-medium">CO2 </span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprintSh} kg
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-xs font-medium">Water Usage</span>
+          <span className="text-sm font-medium">Water Usage</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsageSh} L
           </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-          <span className="text-xs font-medium">Energy</span>
+          <span className="text-sm font-medium">Energy</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.energySh} kWh
           </span>
@@ -308,7 +471,7 @@ export default function CoffeeMachinePassport() {
   )
 
   const renderDetailSection = (title: string, icon: React.ReactNode, description: string, content: React.ReactNode) => (
-    <Collapsible className="mt-4 w-full mx-auto">
+    <Collapsible className="mt-4 w-full  max-w-sm mx-auto">
       <Card className="border-none shadow-sm w-full">
         <CardContent className="p-4">
           <CollapsibleTrigger className="flex items-center justify-between w-full">
@@ -328,19 +491,21 @@ export default function CoffeeMachinePassport() {
       </Card>
     </Collapsible>
   )
- 
-  const copyToClipboard = () => {
-    if (isBrowser) {
-      navigator.clipboard.writeText(couponCode).then(() => {
-        toast(
-          <div>
-            <strong>Coupon code copied</strong>
-            <p>Use for a 20% discount on eco-friendly coffee pods.</p>
-          </div>
-        )
-      })
-    }
-  }
+
+  const renderEcoInnovations = () => (
+    <div className="mt-6 w-full max-w-sm mx-auto">
+      <h4 className="text-lg font-semibold mb-4">Eco-Innovations</h4>
+      {productDetails.ecoInnovations.map((innovation, index) => (
+        <div key={index} className="mb-4">
+          <h5 className="font-semibold">{innovation.name}</h5>
+          <p className="text-sm text-gray-600">{innovation.description}</p>
+        </div>
+      ))}
+    </div>
+  )
+
+  
+
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg rounded-lg overflow-hidden bg-white text-gray-900">
@@ -430,28 +595,34 @@ export default function CoffeeMachinePassport() {
                       <TabsTrigger value="location">Location</TabsTrigger>
                     </TabsList>
                     <TabsContent value="composition">
-                      <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                        <dt className="font-semibold">Product ID:</dt>
-                        <dd>{productDetails.id}</dd>
-                        <dt className="font-semibold">Manufacturer:</dt>
-                        <dd>{productDetails.manufacturer}</dd>
+                      <Collapsible>
+                        <CollapsibleTrigger className="flex items-center justify-between w-full">
+                          <h4 className="text-lg font-semibold">Material Composition</h4>
+                          <ChevronDown className="h-5 w-5" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm mt-4">
+                            <dt className="font-semibold">Product ID:</dt>
+                            <dd>{productDetails.id}</dd>
+                            <dt className="font-semibold">Manufacturer:</dt>
+                            <dd>{productDetails.manufacturer}</dd>
 
-                        {productDetails.materialComposition.map((material, index) => (
-                          <React.Fragment key={index}>
-                            <dt className="font-semibold col-span-2 mt-2">{material.materialType} ({material.percentage}%):</dt>
-                            <dt className="font-semibold ml-2">Source:</dt>
-                            <dd>{material.source}</dd>
-                            <dt className="font-semibold ml-2">Certification:</dt>
-                            <dd>{material.sustainabilityCertification}</dd>
-                            <dt className="font-semibold ml-2">Subcomponents:</dt>
-                            <dd>
-                              {material.subcomponents.map((sub, subIndex) => (
-                                <div key={subIndex}>{sub.name}: {sub.material} ({sub.source})</div>
-                              ))}
-                            </dd>
-                          </React.Fragment>
-                        ))}
-                      </dl>
+                            {productDetails.materialComposition.map((material, index) => (
+                              <React.Fragment key={index}>
+                                <dt className="font-semibold col-span-2 mt-2">{material.materialType} ({material.percentage}%):</dt>
+                                <dt className="font-semibold ml-2">Source:</dt>
+                                <dd>{material.source}</dd>
+                                <dt className="font-semibold ml-2">Certification:</dt>
+                                <dd>{material.sustainabilityCertification}</dd>
+                                <dt className="font-semibold ml-2">Subcomponents:</dt>
+                                <dd>
+                                  {renderSubcomponents(material.subcomponents)}
+                                </dd>
+                              </React.Fragment>
+                            ))}
+                          </dl>
+                        </CollapsibleContent>
+                      </Collapsible>
                     </TabsContent>
                     <TabsContent value="consumer">
                       <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
@@ -477,7 +648,7 @@ export default function CoffeeMachinePassport() {
                     </TabsContent>
                     <TabsContent value="location">
                       <div className="h-64 w-full">
-                        {isBrowser && <MapComponentMarkers markers={demoMarkers} />}
+                        <MapComponentMarkers markers={demoMarkers} />
                       </div>
                     </TabsContent>
                   </Tabs>
@@ -495,7 +666,14 @@ export default function CoffeeMachinePassport() {
                     <dd>{productDetails.healthAndSafety.allergenInformation}</dd>
                   </dl>
                 )}
+                {renderDetailSection(
+                  "Material Source",
+                  <Puzzle className="h-6 w-6 text-violet-500" />,
+                  "Timeline of material sources used in the coffee machine",
+                  renderMaterialSourceTimeline()
+                )}
               </div>
+              {renderEcoInnovations()}
             </>
           )}
 
@@ -505,6 +683,7 @@ export default function CoffeeMachinePassport() {
               <div className="mt-8">
                 {renderEnvironmentalImpact()}
                 {renderEcoCertificates()}
+                
               </div>
             </>
           )}
@@ -529,6 +708,7 @@ export default function CoffeeMachinePassport() {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 bg-white/50 border border-primary/20 hover:bg-primary/10 hover:border-primary transition-colors"
+                    aria-label="Copy coupon code"
                   >
                     <Copy className="h-3 w-3" />
                   </Button>
@@ -543,11 +723,23 @@ export default function CoffeeMachinePassport() {
                 <h3 className="text-lg font-semibold text-primary">Special Offer</h3>
                 <p className="text-xs text-gray-700">Limited time offer: Get a set of reusable coffee filters at 50% off with your machine purchase!</p>
               </div>
-              <Button variant="secondary" size="sm">Shop Now</Button>
+              <Button variant="secondary" size="sm" onClick={() => console.log('Shop Now clicked')}>Shop Now</Button>
             </div>
           </div>
         </div>
       </CardContent>
+
+      {showScrollTop && (
+        <Button
+          variant="outline"
+          size="icon"
+          className="fixed bottom-4 right-4 rounded-full shadow-md bg-white hover:bg-gray-100 transition-all duration-300"
+          onClick={scrollToTop}
+          aria-label="Return to top"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      )}
     </Card>
   )
 }
