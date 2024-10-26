@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { ShoppingBag, Leaf, Truck, ArrowUp, Recycle, Factory ,PackageCheck ,ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package, Droplet, Zap } from 'lucide-react'
+import { ShoppingBag, Leaf, Truck, ArrowUp, Recycle, Factory, PackageCheck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package, Droplet, Zap } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,21 +10,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { MarkerData } from '@/components/MapComponentMarkers'
-
 
 const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
   ssr: false,
   loading: () => <div className="h-64 w-full bg-gray-200 animate-pulse"></div>
 })
-
-const demoMarkers: MarkerData[] = [
-  { position: [62.593341,-101.777344], popupContent: "Wood Origin: Canada", type: 'origin' },
-  { position: [60.128162, 18.643501], popupContent: "Steel Origin: Sweden", type: 'origin' },
-  { position: [20.593683, 78.962883], popupContent: "Steel Origin: India", type: 'origin' },
-  { position: [42.73, 25.48], popupContent: "Manufactured  in Sofia, Bulgaria", type: 'manufacturer'}
-  
-];
 
 type Step = {
   icon: React.ReactNode;
@@ -32,12 +22,18 @@ type Step = {
   description: string;
   details: string;
   pdfLink?: string;
-};
+}
+
+type MarkerData = {
+  position: [number, number];
+  popupContent: string;
+  type: 'origin' | 'manufacturer';
+}
 
 const productSteps: Step[] = [
   {
     icon: <ShoppingBag className="h-6 w-6 text-violet-500" />,
-    title: 'Product Descrtiption',
+    title: 'Product Description',
     description: 'High-quality leather sofa with premium craftsmanship.',
     details: 'Our leather sofa is made from top-grain leather, featuring a sturdy hardwood frame and high-resilience foam cushions for ultimate comfort and durability.'
   },
@@ -80,7 +76,6 @@ const impactSteps: Step[] = [
     description: 'Ethical production practices.',
     details: 'Our manufacturing process adheres to strict fair labor standards and environmental regulations. We are committed to ensuring safe working conditions and fair wages throughout our supply chain.'
   }
-  
 ]
 
 const handlingSteps: Step[] = [
@@ -94,9 +89,8 @@ const handlingSteps: Step[] = [
   {
     icon: <Info className="h-6 w-6 text-blue-600" />,
     title: 'Technical Specifications',
-    description: 'Easy installation in your space.',
-    details: 'Our furniture is designed for easy assembly. Detailed instructions are provided, and customer support is available if you need assistance.',
-    pdfLink: '/assembly-instructions.pdf'
+    description: 'Detailed product specifications.',
+    details: 'Our sofa measures 200cm in length, 90cm in depth, and 85cm in height. It supports a maximum weight of 300kg and is made with fire-resistant materials.'
   },
   {
     icon: <PackageCheck className="h-6 w-6 text-blue-600" />,
@@ -153,14 +147,6 @@ const productDetails = {
     disassemblyInstructions: 'https://example.com/disassembly-guide.pdf',
     repairServices: 'Contact our customer service for authorized repair centers in your area'
   },
-  sustainabilityAndCircularEconomy: {
-    recyclability: '90%',
-    recycledContent: '25%',
-    reusePotential: 'High. Can be refurbished or repurposed. See our guide for ideas: https://example.com/reuse-guide',
-    repairabilityScore: '8/10',
-    endOfLifeInstructions: 'Disassemble for wood and metal recycling at certified centers. Textile components can be composted or recycled depending on local facilities.',
-    takeback: 'Available in select regions. Visit our website for details on our furniture take-back program.'
-  },
   environmentalImpact: {
     carbonFootprint: '30kg CO2',
     waterUsage: '50 liters',
@@ -170,9 +156,15 @@ const productDetails = {
     energySh: '210'
   },
   certifications: ['FSC', 'ISO 14001', 'GOTS'],
-  fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'] as FairLaborCertification[],
+  fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'],
 }
-type FairLaborCertification = 'SA8000' | 'BSCI' | 'Fair Labor Association';
+
+const demoMarkers: MarkerData[] = [
+  { position: [62.593341,-101.777344], popupContent: "Wood Origin: Canada", type: 'origin' },
+  { position: [60.128162, 18.643501], popupContent: "Steel Origin: Sweden", type: 'origin' },
+  { position: [20.593683, 78.962883], popupContent: "Steel Origin: India", type: 'origin' },
+  { position: [42.73, 25.48], popupContent: "Manufactured in Sofia, Bulgaria", type: 'manufacturer'}
+]
 
 export default function ProductJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
@@ -196,6 +188,55 @@ export default function ProductJourney() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  const renderSubcomponents = (subcomponents: any[], level = 0) => (
+    <ul className="list-none space-y-2">
+      {subcomponents.map((sub, subIndex) => (
+        <li key={subIndex} className="flex items-start">
+          <div className="flex items-center">
+            <div className={`w-${3 + level} h-px bg-gray-300 mr-2`}></div>
+            <div className="w-2 h-2 bg-gray-300 rounded-full mr-2"></div>
+          </div>
+          <div>
+            <span className="text-sm text-gray-600">
+              {sub.name}: {sub.material} ({sub.source})
+            </span>
+            {sub.subcomponents && (
+              <div className="ml-4 mt-1">
+                {renderSubcomponents(sub.subcomponents, level + 1)}
+              </div>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+
+  const renderMaterialSourceTimeline = () => (
+    <div className="w-full">
+      <div className="relative">
+        {productDetails.materialComposition.map((material, index) => (
+          <div key={index} className="mb-6">
+            <div className="flex items-center">
+              <div className="w-24 text-right mr-4 text-sm font-semibold">{material.materialType}</div>
+              <div className="w-4 h-4 bg-primary rounded-full"></div>
+              <div className="ml-4 flex-grow">
+                <div className="flex justify-between items-center">
+                  <p className="font-medium">{material.source}</p>
+                  <p className="text-sm font-semibold text-primary">{material.percentage}%</p>
+                </div>
+                <p className="text-sm text-gray-600">{material.sustainabilityCertification}</p>
+              </div>
+            </div>
+            <div className="ml-28 mt-2">
+              {renderSubcomponents(material.subcomponents)}
+            </div>
+          </div>
+        ))}
+        <div className="absolute left-[7rem] top-2 bottom-2 w-px bg-gray-200"></div>
+      </div>
+    </div>
+  )
 
   const renderSteps = (steps: Step[]) => (
     <div className="space-y-4 mx-auto">
@@ -223,7 +264,7 @@ export default function ProductJourney() {
                 </div>
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-4">
-                <p className="text-gray-700 ">{step.details}</p>
+                <p className="text-gray-700">{step.details}</p>
                 {step.pdfLink && (
                   <div className="flex justify-center mt-2">
                     <Button variant="outline" asChild>
@@ -234,24 +275,24 @@ export default function ProductJourney() {
                   </div>
                 )}
                 {step.title === 'Manufacturing & Fair Labor' && (
-                    <div className="mt-4">
-                      <h4 className="font-semibold pl-10 mb-2">Fair Labor Certifications:</h4>
-                      <ul className="list-disc pl-20 space-y-2">
-                        {productDetails.fairLaborCertifications.map((cert, index) => (
-                          <li key={index}>
-                            <a
-                              href={`https://example.com/fair-labor/${cert.toLowerCase().replace(/\s+/g, '-')}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline"
-                            >
-                              {cert}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <div className="mt-4">
+                    <h4 className="font-semibold pl-10 mb-2">Fair Labor Certifications:</h4>
+                    <ul className="list-disc pl-20 space-y-2">
+                      {productDetails.fairLaborCertifications.map((cert, index) => (
+                        <li key={index}>
+                          <a
+                            href={`https://example.com/fair-labor/${cert.toLowerCase().replace(/\s+/g, '-')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:underline"
+                          >
+                            {cert}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </CollapsibleContent>
             </CardContent>
           </Card>
@@ -271,6 +312,7 @@ export default function ProductJourney() {
                 <h3 className="text-lg font-semibold">{title}</h3>
                 <p className="text-sm text-gray-600">{description}</p>
               </div>
+            
             </div>
             <ChevronDown className="h-5 w-5 text-gray-500" />
           </CollapsibleTrigger>
@@ -281,6 +323,7 @@ export default function ProductJourney() {
       </Card>
     </Collapsible>
   )
+
   const renderEnvironmentalImpact = () => (
     <div className="space-y-4 w-full mx-auto text-center">
       <h4 className="text-lg font-semibold">Environmental Impact</h4>
@@ -309,6 +352,7 @@ export default function ProductJourney() {
       </div>
     </div>
   )
+
   const renderEcoCertificates = () => (
     <div className="space-y-4 mt-6">
       <h4 className="text-lg font-semibold">Eco Certificates</h4>
@@ -326,7 +370,8 @@ export default function ProductJourney() {
         ))}
       </div>
     </div>
-  );
+  )
+
   const copyToClipboard = () => {
     if (isBrowser) {
       navigator.clipboard.writeText(couponCode).then(() => {
@@ -340,7 +385,6 @@ export default function ProductJourney() {
     }
   }
 
-  
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg rounded-lg overflow-hidden bg-white text-gray-900">
       <CardContent className="p-0">
@@ -352,7 +396,7 @@ export default function ProductJourney() {
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Furnitures-aBYqzHe2jKqqfnnzrmOSolTeYZ1muS.png"
                 alt="DigiPP Logo" width={60} height={60}
               />
-              <span className="text-2xl  font-bold">DigiPP</span>
+              <span className="text-2xl font-bold">DigiPP</span>
             </div>
             <div className="text-xs">
               © 2024 By SoftGroup
@@ -420,7 +464,7 @@ export default function ProductJourney() {
           {activeSection === 'product' && (
             <>
               {renderSteps(productSteps)}
-              <div className="mt-8 space-y-4">
+              <div className="mt-2 space-y-2">
                 {renderDetailSection(
                   "Product Details",
                   <Info className="h-6 w-6 text-violet-500" />,
@@ -437,23 +481,11 @@ export default function ProductJourney() {
                         <dd>{productDetails.id}</dd>
                         <dt className="font-semibold">Manufacturer:</dt>
                         <dd>{productDetails.manufacturer}</dd>
-
-                        {productDetails.materialComposition.map((material, index) => (
-                          <React.Fragment key={index}>
-                            <dt className="font-semibold col-span-2 mt-2">{material.materialType} ({material.percentage}%):</dt>
-                            <dt className="font-semibold ml-2">Source:</dt>
-                            <dd>{material.source}</dd>
-                            <dt className="font-semibold ml-2">Certification:</dt>
-                            <dd>{material.sustainabilityCertification}</dd>
-                            <dt className="font-semibold ml-2">Subcomponents:</dt>
-                            <dd>
-                              {material.subcomponents.map((sub, subIndex) => (
-                                <div key={subIndex}>{sub.name}: {sub.material} ({sub.source})</div>
-                              ))}
-                            </dd>
-                          </React.Fragment>
-                        ))}
                       </dl>
+                      <div className="mt-4">
+                        <h4 className="font-semibold mb-2">Material Source Timeline</h4>
+                        {renderMaterialSourceTimeline()}
+                      </div>
                     </TabsContent>
                     <TabsContent value="consumer">
                       <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
@@ -507,7 +539,8 @@ export default function ProductJourney() {
                 {renderEnvironmentalImpact()}
                 {renderEcoCertificates()}
               </div>
-            </>)}
+            </>
+          )}
           
           {activeSection === 'handling' && renderSteps(handlingSteps)}
 
@@ -546,7 +579,6 @@ export default function ProductJourney() {
               </div>
             </div>
           </div>
-
         </div>
       </CardContent>
       {showScrollTop && (

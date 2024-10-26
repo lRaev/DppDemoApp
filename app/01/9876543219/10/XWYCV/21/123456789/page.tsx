@@ -263,8 +263,11 @@ const renderMaterialSourceTimeline = () => (
           <div className="flex items-center">
             <div className="w-24 text-right mr-4 text-sm font-semibold">{material.materialType}</div>
             <div className="w-4 h-4 bg-primary rounded-full"></div>
-            <div className="ml-4">
-              <p className="font-medium">{material.source}</p>
+            <div className="ml-4 flex-grow">
+              <div className="flex justify-between items-center">
+                <p className="font-medium">{material.source}</p>
+                <p className="text-sm font-semibold text-primary">{material.percentage}%</p>
+              </div>
               <p className="text-sm text-gray-600">{material.sustainabilityCertification}</p>
             </div>
           </div>
@@ -380,7 +383,7 @@ export default function CoffeeMachinePassport() {
                     </div>
                   )}
                   {step.title === 'Energy Efficiency' && (
-                    <div className="mt-2">
+                    <div className="mt-4">
                       <h4 className="font-semibold mb-2">Energy Consumption Comparison:</h4>
                       <ResponsiveContainer width="100%" height={200}>
                         <BarChart data={productDetails.energyComparison}>
@@ -583,7 +586,7 @@ export default function CoffeeMachinePassport() {
           {activeSection === 'product' && (
             <>
               {renderSteps(productSteps)}
-              <div className="mt-8 space-y-4">
+              <div className="mt-2 space-y-2">
                 {renderDetailSection(
                   "Product Details",
                   <Info className="h-6 w-6 text-violet-500" />,

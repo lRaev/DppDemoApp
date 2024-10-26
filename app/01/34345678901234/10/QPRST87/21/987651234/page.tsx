@@ -610,7 +610,7 @@ export default function WorkJacketJourney() {
           {activeSection === "product" && (
             <>
               {renderSteps(productSteps)}
-              <div className="mt-8 space-y-4">
+              <div className="mt-2 space-y-2">
                 {renderDetailSection(
                   "Product Details",
                   <Info className="h-6 w-6 text-violet-500" />,
