@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Coffee, Leaf, Truck, PackageOpen, Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
+import { Coffee, Leaf, Truck, Factory ,PackageOpen, Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -71,6 +71,12 @@ const impactSteps: Step[] = [
     title: 'Packaging Materials',
     description: 'ECO packaging composition.',
     details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements. We use materials that are easily recyclable and have high recycled content.'
+  },
+  {
+    icon: <Factory className="h-6 w-6 text-green-600" />,
+    title: 'Manufacturing & Fair Labor',
+    description: 'Ethical production practices.',
+    details: 'Our manufacturing process adheres to strict fair labor standards and environmental regulations. We are committed to ensuring safe working conditions and fair wages throughout our supply chain.'
   }
 ]
 
@@ -164,8 +170,10 @@ const productDetails = {
     waterUsageSh: '100',
     energySh: '210'
   },
+  fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'] as FairLaborCertification[],
   certifications: ['Energy Star', 'EPEAT Gold', 'Fair Trade Certified']
 }
+type FairLaborCertification = 'SA8000' | 'BSCI' | 'Fair Labor Association';
 
 export default function CoffeeMachinePassport() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
@@ -178,7 +186,7 @@ export default function CoffeeMachinePassport() {
   }, [])
 
   const renderSteps = (steps: Step[]) => (
-    <div className="space-y-4 w-full mx-auto flex flex-col items-center">
+    <div className="space-y-4 mx-auto">
       {steps.map((step, index) => (
         <Collapsible
           key={index}
@@ -186,7 +194,7 @@ export default function CoffeeMachinePassport() {
           onOpenChange={() => setExpandedStep(expandedStep === index ? null : index)}
           className="w-full"
         >
-          <Card className="border-none shadow-sm w-full">
+          <Card className="border-none shadow-sm">
             <CardContent className="p-4">
               <CollapsibleTrigger className="flex items-center justify-between w-full">
                 <div className="flex items-center w-full">
@@ -223,6 +231,25 @@ export default function CoffeeMachinePassport() {
                     </div>
                   )}
                 </div>
+                {step.title === 'Manufacturing & Fair Labor' && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold pl-10 mb-2">Fair Labor Certifications:</h4>
+                      <ul className="list-disc pl-20 space-y-2">
+                        {productDetails.fairLaborCertifications.map((cert, index) => (
+                          <li key={index}>
+                            <a
+                              href={`https://example.com/fair-labor/${cert.toLowerCase().replace(/\s+/g, '-')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline"
+                            >
+                              {cert}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
               </CollapsibleContent>
             </CardContent>
           </Card>
@@ -237,12 +264,15 @@ export default function CoffeeMachinePassport() {
       <h4 className="text-m font-semibold">Eco Certificates</h4>
       <div className="flex flex-wrap justify-center gap-2">
         {productDetails.certifications.map((cert, index) => (
-          <span
+          <a
             key={index}
-            className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+            href={`https://example.com/certificates/${cert.toLowerCase().replace(/\s+/g, '-')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm hover:bg-green-200 transition-colors duration-200"
           >
             {cert}
-          </span>
+          </a>
         ))}
       </div>
     </div>
@@ -298,7 +328,7 @@ export default function CoffeeMachinePassport() {
       </Card>
     </Collapsible>
   )
-
+ 
   const copyToClipboard = () => {
     if (isBrowser) {
       navigator.clipboard.writeText(couponCode).then(() => {

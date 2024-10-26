@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import {
   ShoppingBag,
   Leaf,
+  Factory,
   PackageOpen,
   Truck,
   ChevronDown,
@@ -180,7 +181,9 @@ const productDetails = {
     "EU Ecolabel",
     "Bluesign",
   ],
+  fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'] as FairLaborCertification[],
 };
+type FairLaborCertification = 'SA8000' | 'BSCI' | 'Fair Labor Association';
 
 export default function WorkJacketJourney() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
@@ -242,12 +245,15 @@ export default function WorkJacketJourney() {
       <h4 className="text-lg font-semibold">Eco Certificates</h4>
       <div className="flex flex-wrap gap-2">
         {productDetails.certifications.map((cert, index) => (
-          <span
+          <a
             key={index}
-            className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+            href={`https://example.com/certificates/${cert.toLowerCase().replace(/\s+/g, '-')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm hover:bg-green-200 transition-colors duration-200"
           >
             {cert}
-          </span>
+          </a>
         ))}
       </div>
     </div>
@@ -285,6 +291,11 @@ export default function WorkJacketJourney() {
       title: 'Packaging Materials',
       description: 'ECO packaging composition.',
       details: 'Our packaging is designed with sustainability in mind, adhering to European Sustainability Product Requirements.'
+    },{
+      icon: <Factory className="h-6 w-6 text-green-600" />,
+      title: 'Manufacturing & Fair Labor',
+      description: 'Ethical production practices.',
+      details: 'Our manufacturing process adheres to strict fair labor standards and environmental regulations. We are committed to ensuring safe working conditions and fair wages throughout our supply chain.'
     }
   ];
 
@@ -324,7 +335,7 @@ export default function WorkJacketJourney() {
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-4">
                 {typeof step.details === "string" ? (
-                  <p className="text-gray-700 text-center">{step.details}</p>
+                  <p className="text-gray-700 ">{step.details}</p>
                 ) : (
                   step.details
                 )}
@@ -357,6 +368,25 @@ export default function WorkJacketJourney() {
                     </ul>
                   </div>
                 )}
+                {step.title === 'Manufacturing & Fair Labor' && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold pl-10 mb-2">Fair Labor Certifications:</h4>
+                      <ul className="list-disc pl-20 space-y-2">
+                        {productDetails.fairLaborCertifications.map((cert, index) => (
+                          <li key={index}>
+                            <a
+                              href={`https://example.com/fair-labor/${cert.toLowerCase().replace(/\s+/g, '-')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary hover:underline"
+                            >
+                              {cert}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
               </CollapsibleContent>
             </CardContent>
           </Card>
