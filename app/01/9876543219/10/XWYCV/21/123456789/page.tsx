@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Coffee, Leaf, Truck, PackageOpen, Puzzle,Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog, ArrowUp, Factory, Heart, Wrench, TreeDeciduous, Clock } from 'lucide-react'
+import { Coffee,Download, Leaf, Truck, PackageOpen, Puzzle,Zap, ChevronDown, ChevronUp, Copy, Recycle, Droplet, ThermometerSun, Info, Shield, Settings, HandHelping, Box, UserRoundCog, ArrowUp, Factory, Heart, Wrench, TreeDeciduous, Clock } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -412,6 +412,17 @@ export default function CoffeeMachinePassport() {
                         Our machine uses {((1 - productDetails.waterEfficiency.usagePerCup / productDetails.waterEfficiency.industryAverage) * 100).toFixed(1)}% less water than the industry average.
                       </p>
                     </div>
+                  )}
+                  {step.pdfLink && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => window.open(step.pdfLink, '_blank')}
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Download User Guide PDF
+                    </Button>
                   )}
                   {step.title === 'Carbon Offset Program' && (
                     <div className="mt-4">
