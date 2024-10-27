@@ -10,7 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+
+import { BarChart, Bar, Cell , XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import type { MarkerData } from '@/components/MapComponentMarkers'
 
 const MapComponentMarkers = dynamic(() => import('@/components/MapComponentMarkers'), {
@@ -210,7 +211,7 @@ const productDetails = {
   certifications: ['Energy Star', 'EPEAT Gold', 'Fair Trade Certified'] as Certification[],
   fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'] as FairLaborCertification[],
   energyComparison: [
-    { name: 'Our Model', energy: 1000 },
+    { name: 'Our Model', energy: 850 },
     { name: 'Average Model', energy: 1200 },
     { name: 'Inefficient Model', energy: 1500 }
   ],
@@ -384,19 +385,23 @@ export default function CoffeeMachinePassport() {
                   )}
                   {step.title === 'Energy Efficiency' && (
                     <div className="mt-4">
-                      <h4 className="font-semibold mb-2">Energy Consumption Comparison:</h4>
-                      <ResponsiveContainer width="100%" height={200}>
+                    <h4 className="font-semibold mb-2">Energy Consumption Comparison:</h4>
+                    <div className="flex justify-start">
+                      <ResponsiveContainer width="70%" height={200}>
                         <BarChart data={productDetails.energyComparison}>
                           <CartesianGrid strokeDasharray="3 3" />
                           <XAxis dataKey="name" />
                           <YAxis />
                           <Tooltip />
                           <Legend />
-                          <Bar dataKey="energy" fill="#8884d8" />
+                          <Bar dataKey="energy" fill="#8884d8">
+                      
+                          </Bar>
                         </BarChart>
                       </ResponsiveContainer>
-                      <p className="text-sm text-gray-600 mt-2">Energy consumption in kWh/year</p>
                     </div>
+                    <p className="text-sm text-gray-600 mt-2">Energy consumption in kWh/year</p>
+                  </div>
                   )}
                   {step.title === 'Water Management' && (
                     <div className="mt-4">
@@ -450,24 +455,27 @@ export default function CoffeeMachinePassport() {
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-sm font-medium">CO2 </span>
+         
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprintSh} kg
           </span>
+          <span className="text-sm font-medium">CO2 </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-sm font-medium">Water Usage</span>
+          
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsageSh} L
           </span>
+          <span className="text-xs font-medium">Water Usage</span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-          <span className="text-sm font-medium">Energy</span>
+          
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.energySh} kWh
           </span>
+          <span className="text-xs font-medium">Energy</span>
         </Card>
       </div>
     </div>
@@ -592,8 +600,8 @@ export default function CoffeeMachinePassport() {
                   <Info className="h-6 w-6 text-violet-500" />,
                   "Comprehensive information about the coffee machine's composition and features",
                   <Tabs defaultValue="composition" className="w-full">
-                    <TabsList className="grid w-full grid-cols-3">
-                      <TabsTrigger value="composition">Composition</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2">
+                      
                       <TabsTrigger value="consumer">Consumer Info</TabsTrigger>
                       <TabsTrigger value="location">Location</TabsTrigger>
                     </TabsList>
@@ -670,13 +678,14 @@ export default function CoffeeMachinePassport() {
                   </dl>
                 )}
                 {renderDetailSection(
-                  "Material Source",
+                  "Material Composition",
                   <Puzzle className="h-6 w-6 text-violet-500" />,
-                  "Timeline of material sources used in the coffee machine",
+                  "The materials used to craft your coffee machine",
                   renderMaterialSourceTimeline()
                 )}
+                  
               </div>
-              {renderEcoInnovations()}
+           
             </>
           )}
 

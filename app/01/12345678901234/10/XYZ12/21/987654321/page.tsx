@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { ShoppingBag, Leaf, Truck, ArrowUp, Recycle, Factory, PackageCheck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package, Droplet, Zap } from 'lucide-react'
+import { ShoppingBag, Leaf, RefreshCcw ,Truck, ArrowUp, Recycle, Factory, PackageCheck, ChevronDown, ChevronUp, Copy, Tag, Sparkles, Info, Shield, MapPin, Settings, HandHelping, Box, Package, Droplet, Zap } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -35,7 +35,7 @@ const productSteps: Step[] = [
     icon: <ShoppingBag className="h-6 w-6 text-violet-500" />,
     title: 'Product Description',
     description: 'High-quality leather sofa with premium craftsmanship.',
-    details: 'Our leather sofa is made from top-grain leather, featuring a sturdy hardwood frame and high-resilience foam cushions for ultimate comfort and durability.'
+    details: 'Our leather sofa is made from OEKO Tex certified leather, featuring a sturdy hardwood frame and high-resilience foam cushions for ultimate comfort and durability.'
   },
   {
     icon: <Tag className="h-6 w-6 text-violet-500" />,
@@ -65,7 +65,7 @@ const impactSteps: Step[] = [
     details: 'We offer a comprehensive recycling program for our products, ensuring that materials are properly recycled or repurposed at the end of their lifecycle.'
   },
   {
-    icon: <Package className="h-6 w-6 text-green-600" />,
+    icon: <RefreshCcw className="h-6 w-6 text-green-600" />,
     title: 'Circular Economy',
     description: 'Reducing waste through reuse and refurbishment.',
     details: 'Our products are designed for durability and longevity. We offer repair services and encourage customers to donate or resell their furniture when they no longer need it.'
@@ -90,7 +90,8 @@ const handlingSteps: Step[] = [
     icon: <Info className="h-6 w-6 text-blue-600" />,
     title: 'Technical Specifications',
     description: 'Detailed product specifications.',
-    details: 'Our sofa measures 200cm in length, 90cm in depth, and 85cm in height. It supports a maximum weight of 300kg and is made with fire-resistant materials.'
+    details: 'Our sofa measures 200cm in length, 90cm in depth, and 85cm in height. It supports a maximum weight of 300kg and is made with fire-resistant materials.',
+    pdfLink: '/assembly-instructions.pdf'
   },
   {
     icon: <PackageCheck className="h-6 w-6 text-blue-600" />,
@@ -108,7 +109,7 @@ const productDetails = {
       materialType: 'Wood',
       source: 'FSC-certified Oak',
       sustainabilityCertification: 'FSC',
-      percentage: 70,
+      percentage: 55,
       subcomponents: [
         { name: 'Frame', material: 'Oak', source: 'FSC-certified' },
         { name: 'Legs', material: 'Oak', source: 'FSC-certified' },
@@ -118,19 +119,29 @@ const productDetails = {
       materialType: 'Metal',
       source: 'Recycled Steel',
       sustainabilityCertification: 'ISO 14001',
-      percentage: 20,
+      percentage: 15,
       subcomponents: [
         { name: 'Screws', material: 'Steel', source: 'Recycled' },
         { name: 'Hinges', material: 'Steel', source: 'Recycled' },
       ]
     },
     {
+      materialType: 'Leather',
+      source: 'ECO LEather',
+      sustainabilityCertification: 'OEKO-Tex',
+      percentage: 15,
+      subcomponents: [
+        { name: 'Cushion Cover', material: 'Recycled Leather', source: 'Organic' },
+        { name: 'Sofa Cover', material: 'Polyurethane', source: 'Synthetic Blend' },
+      ]
+    },
+    {
       materialType: 'Textile',
       source: 'Natural Fibers',
       sustainabilityCertification: 'GOTS',
-      percentage: 10,
+      percentage: 15,
       subcomponents: [
-        { name: 'Cushion Cover', material: 'Cotton', source: 'Organic' },
+        { name: 'Cushion Filler', material: 'Cotton', source: 'Organic' },
         { name: 'Padding', material: 'Wool', source: 'Organic' },
       ]
     },
@@ -155,7 +166,7 @@ const productDetails = {
     waterUsageSh: '100',
     energySh: '210'
   },
-  certifications: ['FSC', 'ISO 14001', 'GOTS'],
+  certifications: ['FSC', 'ISO 14001', 'GOTS', 'OEKO-Tex Leather'],
   fairLaborCertifications: ['SA8000', 'BSCI', 'Fair Labor Association'],
 }
 
@@ -330,24 +341,27 @@ export default function ProductJourney() {
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-xs font-medium">CO2 </span>
+          
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprintSh} kg
           </span>
+          <span className="text-xs font-medium">CO2 </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-xs font-medium">Water Usage</span>
+          
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsageSh} L
           </span>
+          <span className="text-xs font-medium">Water Usage</span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-          <span className="text-xs font-medium">Energy</span>
+          
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.energySh} kWh
           </span>
+          <span className="text-xs font-medium">Energy</span>
         </Card>
       </div>
     </div>
@@ -483,7 +497,7 @@ export default function ProductJourney() {
                         <dd>{productDetails.manufacturer}</dd>
                       </dl>
                       <div className="mt-4">
-                        <h4 className="font-semibold mb-2">Material Source Timeline</h4>
+                        <h4 className="font-semibold mb-2">Material Composition</h4>
                         {renderMaterialSourceTimeline()}
                       </div>
                     </TabsContent>

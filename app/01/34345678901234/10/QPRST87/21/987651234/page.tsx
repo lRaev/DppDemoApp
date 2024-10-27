@@ -253,24 +253,24 @@ export default function WorkJacketJourney() {
       <div className="grid grid-cols-3 gap-4">
         <Card className="p-4 flex flex-col items-center">
           <Truck className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-xs font-medium">CO2 </span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.carbonFootprint} kg
           </span>
+          <span className="text-xs font-medium">CO2 </span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Droplet className="h-8 w-8 text-blue-500 mb-2" />
-          <span className="text-xs font-medium">Water Usage</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.waterUsage} L
           </span>
+          <span className="text-xs font-medium">Water Usage</span>
         </Card>
         <Card className="p-4 flex flex-col items-center">
           <Zap className="h-8 w-8 text-yellow-500 mb-2" />
-          <span className="text-xs font-medium">Energy</span>
           <span className="text-m font-bold">
             {productDetails.environmentalImpact.energy} kWh
           </span>
+          <span className="text-xs font-medium">Energy</span>
         </Card>
       </div>
     </div>
@@ -456,6 +456,32 @@ export default function WorkJacketJourney() {
     </Collapsible>
   );
 
+
+  const renderMaterialSourceTimeline = () => (
+    <div className="w-full">
+      <div className="relative">
+        {productDetails.materialComposition.map((material, index) => (
+          <div key={index} className="mb-6">
+            <div className="flex items-center">
+              <div className="w-24 text-right mr-4 text-sm font-semibold">{material.materialType}</div>
+              <div className="w-4 h-4 bg-primary rounded-full"></div>
+              <div className="ml-4 flex-grow">
+                <div className="flex justify-between items-center">
+                  <p className="font-medium">{material.source}</p>
+                  <p className="text-sm font-semibold text-primary">{material.percentage}%</p>
+                </div>
+                <p className="text-sm text-gray-600">{material.sustainabilityCertification}</p>
+              </div>
+            </div>
+            <div className="ml-28 mt-2">
+              {renderSubcomponents(material.subcomponents)}
+            </div>
+          </div>
+        ))}
+        <div className="absolute left-[7rem] top-2 bottom-2 w-px bg-gray-200"></div>
+      </div>
+    </div>
+  )
   const copyToClipboard = () => {
     if (isBrowser) {
       navigator.clipboard.writeText(couponCode).then(() => {
