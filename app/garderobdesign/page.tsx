@@ -776,8 +776,10 @@ export default function WorkJacketJourney() {
                   <h3 className="text-lg font-semibold text-primary">Bundle Offer</h3>
                   <p className="text-xs text-gray-700">25% off when you buy 2+ pairs of mittens</p>
                 </div>
-                <Button variant="secondary" size="sm" className="w-full mt-2">
-                  Shop Now
+                <Button variant="secondary" size="sm" className="self-end px-6 hover:shadow-md transition-all" asChild>
+                  <a href="https://garderobdesign.com" target="_blank" rel="noopener noreferrer">
+                    Shop Now
+                  </a>
                 </Button>
               </div>
             </div>
