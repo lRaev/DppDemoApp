@@ -46,12 +46,12 @@ const demoMarkers: MarkerData[] = [
   },
   {
     position: [23.424076, 53.847818],
-    popupContent: "Polyester Origin: United Arab Emirates",
+    popupContent: "Wool Origin: United Arab Emirates",
     type: "origin",
   },
   {
     position: [41.902784, 12.496366],
-    popupContent: "Manufactured in Rome, Italy",
+    popupContent: "Manufactured in Sofia, Bulgaria",
     type: "manufacturer",
   },
 ]
@@ -70,14 +70,14 @@ const productSteps: Step[] = [
     title: "Product Description",
     description: "Eco-friendly mittens with stylish design.",
     details:
-      "Our designer mittens are crafted from recycled wool and upcycled leather, featuring a unique two-tone design that combines comfort with contemporary style. Each pair is handmade with attention to detail and sustainability.",
+      "Our designer mittens are crafted from recycled wool and upcycled leather, featuring a unique design that combines comfort with contemporary style. Each pair is handmade with attention to detail and sustainability.",
   },
   {
     icon: <Tag className="h-6 w-6 text-violet-500" />,
     title: "Brand Details",
     description: "Sustainable fashion brand focused on eco-conscious accessories.",
     details:
-      "GARDEROB is a designer atelier and apparel brand based in Sofia, Bulgaria, founded in 2006. The brand has since grown into a small, dedicated team of like-minded professionals who share the same love, passion and enthusiasm for minimalism.",
+      "GARDEROB is a designer atelier and apparel brand based in Sofia, Bulgaria, founded in 2006. The brand has since grown into a small, dedicated team of like-minded professionals who share the same love, passion and enthusiasm for minimalism. Our fabrics are carefully selected and although we prefer to work with flax, wool and silk, we do offer items made from easy to care materials. All our cotton is sourced from an OEKO-TEX® certified supplier. Ultimately, our aim is to create high-quality clothes that stand the test of time and make the woman who wears GARDEROB feel confident and brave.",
   },
   {
     icon: <Sparkles className="h-6 w-6 text-violet-500" />,
@@ -94,14 +94,14 @@ const handlingSteps: Step[] = [
     title: "Shipping",
     description: "Carbon-neutral delivery worldwide.",
     details:
-      "We ship using plastic-free packaging made from recycled cardboard. All shipping emissions are offset through our partnership with climate action organizations. Standard delivery takes 3-5 business days.",
+      "We ship using plastic-free packaging made from recycled cardboard. All shipping emissions are offset through our partnership with climate action organizations. Standard delivery takes 1-2 business days.",
   },
   {
     icon: <Lightbulb className="h-6 w-6 text-blue-600" />,
     title: "Usage Tips",
     description: "Get the most out of your mittens.",
     details:
-      "These mittens are designed for everyday use in cold weather. The metallic leather palm provides extra grip for activities like driving or holding your phone. For extreme cold, consider wearing a thin liner glove underneath.",
+      "These mittens are designed for everyday use in cold weather. For extreme cold, consider wearing a thin liner glove underneath.",
     pdfLink: "/care-guide.pdf",
   },
 ]
@@ -112,19 +112,29 @@ const productDetails = {
   materialComposition: [
     {
       materialType: "Wool",
-      source: "Recycled Wool Sweaters",
+      source: "Upcycled Wool Scraps",
       sustainabilityCertification: "GRS",
-      percentage: 70,
+      percentage: 45,
       subcomponents: [
-        { name: "Outer Shell", material: "Wool", source: "Recycled" },
-        { name: "Lining", material: "Wool", source: "Recycled" },
+        { name: "Outer Shell", material: "Wool", source: "Upcycled" },
+        { name: "Lining", material: "Wool", source: "Upcycled" },
+      ],
+    },
+    {
+      materialType: "Cotton",
+      source: "Reclaimed Cotton Textiles",
+      sustainabilityCertification: "OCS",
+      percentage: 30,
+      subcomponents: [
+        { name: "Inner Lining", material: "Cotton", source: "Upcycled" },
+        { name: "Trim", material: "Cotton", source: "Upcycled" },
       ],
     },
     {
       materialType: "Leather",
-      source: "Upcycled Leather Offcuts",
+      source: "Upcycled Leather Scraps",
       sustainabilityCertification: "LWG",
-      percentage: 30,
+      percentage: 25,
       subcomponents: [
         { name: "Palm", material: "Leather", source: "Upcycled" },
         { name: "Thumb", material: "Leather", source: "Upcycled" },
@@ -175,16 +185,20 @@ type FairLaborCertification = "Fair Trade Certified" | "WRAP" | "SA8000"
 // Product images array
 const productImages = [
   {
-    src: "/images/nowastelab.jpg",
+    src: "/images/Garderob051343_small.jpg ",
     alt: "Gray and silver mittens with metallic palm detail",
   },
   {
-    src: "/images/Garderob051343_small.jpg",
+    src: "/images/nowastelab.jpg",
     alt: "Pair of gray wool mittens with silver accents on tan leather chair",
   },
   {
     src: "/images/Garderob050892_small.jpg",
     alt: "Black and silver mitten with contrasting materials",
+  },
+  {
+    src: "/images/Garderob051349_small.jpg",
+    alt: "Gray wool mittens with silver metallic palm detail",
   },
   {
     src: "/images/Garderob050893_small.jpg",
@@ -500,12 +514,12 @@ export default function WorkJacketJourney() {
           <h2 className="text-xl font-semibold text-center">Discover Your Mittens's Journey</h2>
         </div>
 
-        <div className="p-4">
-          <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
-          <h1 className="text-4xl font-bold mb-6 text-primary">Mittens's Story</h1>
+        <div className="p-3">
+          <h2 className="text-2xl font-bold mb-2 text-gray-800">NO WASTE LAB</h2>
+          <h1 className="text-m font-bold mb-2 text-primary">by GARDEROB</h1>
 
           {/* Image Gallery */}
-          <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
+          <div className="relative w-full mb-4 rounded-lg overflow-hidden shadow-lg">
             <div className="relative aspect-[4/3] w-full">
               <Image
                 src={productImages[currentImageIndex].src || "/placeholder.svg"}
@@ -559,7 +573,7 @@ export default function WorkJacketJourney() {
           </div>
 
           {/* Thumbnail gallery */}
-          <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          <div className="flex justify-center gap-2 mb-2 overflow-x-auto pb-2 px-1 w-full">
             {productImages.map((image, index) => (
               <button
                 key={index}
@@ -568,7 +582,7 @@ export default function WorkJacketJourney() {
                 }`}
                 onClick={() => setCurrentImageIndex(index)}
               >
-                <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className={`object-cover object-center ${currentImageIndex !== index ? "opacity-80" : ""}`} />
               </button>
             ))}
           </div>
@@ -726,7 +740,7 @@ export default function WorkJacketJourney() {
           {activeSection === "impact" && (
             <>
               {renderSteps(impactSteps)}
-              {renderPackageInfo()}
+              
             </>
           )}
           {activeSection === "handling" && renderSteps(handlingSteps)}
@@ -767,6 +781,32 @@ export default function WorkJacketJourney() {
                 </Button>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="mt-8 border-t pt-4">
+          <div className="flex flex-col items-center justify-center space-y-2">
+            <div className="flex items-center justify-center space-x-4">
+                <a
+                href="https://www.gs1bg.org/en/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80"
+              >
+                <Image
+                  src="/images/gs1_logo.svg"
+                  alt="GS1 Bulgaria"
+                  width={80}
+                  height={44}
+                  className="h-11 w-auto"
+                />
+              </a>
+            
+              <div className="h-8 border-l border-gray-300"></div>
+              <div className="flex flex-col">
+                <span className="text-xs font-medium text-gray-700">The Global Language of Business</span>
+              </div>
+            </div>
+            <p className="text-[10px] text-gray-400 mt-1"></p>
           </div>
         </div>
       </CardContent>
