@@ -50,7 +50,7 @@ const demoMarkers: MarkerData[] = [
     type: "origin",
   },
   {
-    position: [41.902784, 12.496366],
+    position: [42.6977, 23.3119],
     popupContent: "Manufactured in Sofia, Bulgaria",
     type: "manufacturer",
   },
