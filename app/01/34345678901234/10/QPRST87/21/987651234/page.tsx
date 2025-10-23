@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import {
+  Pickaxe,
   ShoppingBag,
   ArrowUp ,
   Leaf,
@@ -499,18 +500,13 @@ export default function WorkJacketJourney() {
     <Card className="w-full max-w-md mx-auto shadow-lg rounded-lg overflow-hidden bg-white text-gray-900">
       <CardContent className="p-0">
         <div className="bg-gradient-to-r from-orange-600/90 to-blue-800/90 backdrop-blur-md text-white p-2 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10  bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNMTUgMTVMMjAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgNDVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgMTVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==')]"></div>
+        
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-0 transition-transform duration-300 hover:scale-105">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Furnitures-aBYqzHe2jKqqfnnzrmOSolTeYZ1muS.png"
-                alt="DigiPP Logo"
-                width={60}
-                height={60}
-              />
+               <Pickaxe className="h-8 w-8 text-brown mr-2" />
               <span className="text-2xl font-bold">DigiPP</span>
             </div>
-            <div className="text-xs">© 2024 By SoftGroup</div>
+            <div className="text-xs">© 2025 By SoftGroup</div>
           </div>
           <h2 className="text-xl font-semibold text-center">
             Discover Your Work Jacket's Journey

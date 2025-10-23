@@ -540,7 +540,7 @@ export default function CoffeeMachinePassport() {
               <span className="text-2xl font-bold">EcoBrew</span>
             </div>
             <div className="text-xs">
-              © 2024 By SoftGroup
+              © 2025 By SoftGroup
             </div>
           </div>
           <h2 className="text-xl font-semibold text-center mt-2">Discover Your Coffee Machine's Journey</h2>

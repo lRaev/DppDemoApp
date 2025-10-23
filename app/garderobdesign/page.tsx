@@ -501,17 +501,21 @@ export default function WorkJacketJourney() {
           <div className="absolute inset-0 opacity-10  bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNMTUgMTVMMjAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgNDVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgMTVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==')]"></div>
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-0 transition-transform duration-300 hover:scale-105">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Furnitures-aBYqzHe2jKqqfnnzrmOSolTeYZ1muS.png"
-                alt="DigiPP Logo"
-                width={60}
-                height={60}
-              />
-              <span className="text-2xl font-bold">DigiPP</span>
+              <div className="z-10">
+                <Image
+                  src="/images/garderob-design-logo@2x.png"
+                  alt="GARDEROB Logo"
+                  width={120}
+                  height={30}
+                  className="opacity-170 hover:opacity-100 transition-opacity margin-30"
+                 
+                />
+              </div>
+         
             </div>
             <div className="text-xs">© 2025 By SoftGroup</div>
           </div>
-          <h2 className="text-xl font-semibold text-center">Discover Your Mittens's Journey</h2>
+          <h2 className="text-xl font-semibold text-center justifyContent:space-between">Discover Your Mittens's Journey</h2>
         </div>
 
         <div className="p-3">
