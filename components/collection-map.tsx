@@ -42,8 +42,8 @@ export function CollectionMap({ points }: CollectionMapProps) {
       const avgLng = points.reduce((sum, p) => sum + p.lng, 0) / points.length
 
       // Create map
-      const map = L.map(mapRef.current).setView([avgLat, avgLng], 13)
-
+      const map = L.map(mapRef.current!).setView([avgLat, avgLng], 13)
+      
       // Add tile layer
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
