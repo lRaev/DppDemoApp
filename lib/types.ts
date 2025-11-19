@@ -305,6 +305,14 @@ export interface PackagingInfo {
   recyclable: boolean
 }
 
+export interface CollectionPoint {
+  id: number
+  name: string
+  address: string
+  lat: number
+  lng: number
+}
+
 export interface SustainabilityData {
   co2Footprint?: string
   carbonFootprint?: string
@@ -322,6 +330,7 @@ export interface SustainabilityData {
     workersRights?: boolean
     communityImpact?: string
   }
+  collectionPoints?: CollectionPoint[]
 }
 
 export interface SustainabilityDataSummary {

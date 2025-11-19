@@ -40,7 +40,6 @@ export const sofaProduct: DigitalProductPassport = {
   manufacturerInfo: {
     manufacturerId: "MFR-001",
     manufacturerName: "EcoWood Furniture Co.",
-    name: "EcoWood Furniture Co.",
     manufacturingDate: "2024-02-05",
     manufacturerUrl: "https://ecowood-furniture.example",
     address: {

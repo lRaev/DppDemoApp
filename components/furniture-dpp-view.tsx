@@ -307,7 +307,7 @@ export function MobileDppView({
                             </div>
                           )}
 
-                          {fullMaterial.sustainabilityInfo && (
+                          {fullMaterial.sustainabilityInfo && typeof fullMaterial.sustainabilityInfo === 'object' && (
                             <div className="mt-3 p-3 bg-green-50 rounded-md border border-green-200">
                               <p className="font-semibold text-sm mb-3 text-green-900">Sustainability</p>
                               <div className="grid grid-cols-3 gap-2 text-xs">
@@ -359,15 +359,11 @@ export function MobileDppView({
 
                           {/* Badges */}
                           <div className="flex gap-2 mt-2">
-                            {fullMaterial.recyclable && (
+                            {typeof fullMaterial.sustainabilityInfo === 'object' &&
+                             fullMaterial.sustainabilityInfo?.recyclability && (
                               <Badge variant="outline" className="text-xs">
                                 <Recycle className="h-3 w-3 mr-1" />
                                 Recyclable
-                              </Badge>
-                            )}
-                            {fullMaterial.hazardous && (
-                              <Badge variant="destructive" className="text-xs">
-                                Hazardous
                               </Badge>
                             )}
                           </div>
