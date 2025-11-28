@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Product Journey',
   description: 'Discover your product\'s journey',
+  icons: {
+    icon: '/Adobe Express - file-2.png',
+  },
 };
 
 export default function RootLayout({

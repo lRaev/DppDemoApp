@@ -535,26 +535,24 @@ export default function CoffeeMachinePassport() {
         <div className="bg-gradient-to-r from-green-600/90 to-green-800/90 backdrop-blur-md text-white p-4 relative overflow-hidden">
           <div className="absolute inset-0 opacity-25 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxjaXJjbGUgY3g9IjE1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNMTUgMTVMMjAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iNDUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgNDVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxjaXJjbGUgY3g9IjQ1IiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNmZmYiPjwvY2lyY2xlPgo8cGF0aCBkPSJNNDUgMTVMNDAgMzAiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+Cjwvc3ZnPg==')]"></div>
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-0 transition-transform duration-300 hover:scale-105">
-             <div className="z-10">
-                             <Image
-                               src="/images/garderob-design-logo@2x.png"
-                               alt="GARDEROB Logo"
-                               width={120}
-                               height={30}
-                               className="opacity-170 hover:opacity-100 transition-opacity margin-30"
-                              
-                             />
-                           </div> 
+            <div className="flex items-center space-x-2 transition-transform duration-300 hover:scale-105">
+              <div className="z-10 flex items-center gap-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
+                  <Coffee className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-xl font-bold text-white">CoffeePro</span>
+              </div>
+            </div>
+            <div className="text-xs text-white/70">
               © 2025 By SoftGroup
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-center mt-2">Discover Your Coffee Machine's Journey</h2>
+          <h2 className="text-xl font-semibold text-center mt-2">Discover Your Coffee Machine&apos;s Journey</h2>
         </div>
 
         <div className="p-4">
           <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
-          <h1 className="text-4xl font-bold mb-6 text-primary">Coffee Machine's Story</h1>
+          <h1 className="text-4xl font-bold mb-6 text-primary">Coffee Machine&apos;s Story</h1>
 
           <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
             <Image
