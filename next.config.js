@@ -1,9 +1,8 @@
 const nextConfig = {
-  output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: { 
+  images: {
     unoptimized: true,
     domains: ['hebbkx1anhila5yf.public.blob.vercel-storage.com', 'cdnjs.cloudflare.com'],
   },
