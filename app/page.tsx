@@ -25,7 +25,7 @@ const OfficeMapComponent = dynamic(() => import("@/components/OfficeMapComponent
 })
 
 // Cloudflare Turnstile Site Key - replace with your actual key
-const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string
 
 export default function HomePage() {
   const [formData, setFormData] = useState({
