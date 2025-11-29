@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,6 +13,7 @@ import { Check, Loader2, CheckCircle, ArrowRight } from "lucide-react"
 import { CookieConsent } from "@/components/cookie-consent"
 import Image from "next/image"
 import dynamic from "next/dynamic"
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile"
 
 const OfficeMapComponent = dynamic(() => import("@/components/OfficeMapComponent"), {
   ssr: false,
@@ -23,6 +24,9 @@ const OfficeMapComponent = dynamic(() => import("@/components/OfficeMapComponent
   ),
 })
 
+// Cloudflare Turnstile Site Key - replace with your actual key
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA" // Test key for development
+
 export default function HomePage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,10 +34,14 @@ export default function HomePage() {
     company: "",
     interest: "",
     message: "",
+    website: "", // Honeypot field - should remain empty
+    timestamp: Date.now(), // Time-based bot detection
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const turnstileRef = useRef<TurnstileInstance>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -58,6 +66,7 @@ export default function HomePage() {
     if (!formData.company.trim()) newErrors.company = "Company is required"
     if (!formData.interest) newErrors.interest = "Please select an interest"
     if (!formData.message.trim()) newErrors.message = "Message is required"
+    if (!turnstileToken) newErrors.form = "Please complete the security check"
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -71,7 +80,7 @@ export default function HomePage() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken }),
       })
 
       if (response.ok) {
@@ -95,7 +104,7 @@ export default function HomePage() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, type: "demo" }),
+        body: JSON.stringify({ ...formData, type: "demo", turnstileToken }),
       })
 
       if (response.ok) {
@@ -118,7 +127,11 @@ export default function HomePage() {
       company: "",
       interest: "",
       message: "",
+      website: "",
+      timestamp: Date.now(), // Reset timestamp for new submission
     })
+    setTurnstileToken(null)
+    turnstileRef.current?.reset()
   }
 
   return (
@@ -413,6 +426,17 @@ export default function HomePage() {
                   ) : (
                     <form className="space-y-4" onSubmit={handleSubmit}>
                       {errors.form && <p className="text-sm text-red-600">{errors.form}</p>}
+                      {/* Honeypot field - hidden from users, bots will fill it */}
+                      <div style={{ position: 'absolute', left: '-9999px', height: 0, overflow: 'hidden' }} aria-hidden="true">
+                        <input
+                          type="text"
+                          name="website"
+                          value={formData.website}
+                          onChange={handleChange}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      </div>
                       <div className="space-y-2">
                         <Label htmlFor="name" className="text-gray-900">
                           Name
@@ -494,10 +518,19 @@ export default function HomePage() {
                         />
                         {errors.message && <p className="text-xs text-red-600">{errors.message}</p>}
                       </div>
+                      <div className="flex justify-center">
+                        <Turnstile
+                          ref={turnstileRef}
+                          siteKey={TURNSTILE_SITE_KEY}
+                          onSuccess={(token) => setTurnstileToken(token)}
+                          onError={() => setTurnstileToken(null)}
+                          onExpire={() => setTurnstileToken(null)}
+                        />
+                      </div>
                       <Button
                         type="submit"
                         className="w-full bg-blue-600 text-white hover:bg-blue-700"
-                        disabled={isLoading}
+                        disabled={isLoading || !turnstileToken}
                       >
                         {isLoading ? (
                           <>
@@ -529,6 +562,17 @@ export default function HomePage() {
                   ) : (
                     <form className="space-y-4" onSubmit={handleDemoRequest}>
                       {errors.form && <p className="text-sm text-red-600">{errors.form}</p>}
+                      {/* Honeypot field - hidden from users, bots will fill it */}
+                      <div style={{ position: 'absolute', left: '-9999px', height: 0, overflow: 'hidden' }} aria-hidden="true">
+                        <input
+                          type="text"
+                          name="website"
+                          value={formData.website}
+                          onChange={handleChange}
+                          tabIndex={-1}
+                          autoComplete="off"
+                        />
+                      </div>
                       <div className="space-y-2">
                         <Label htmlFor="demo-name" className="text-gray-900">
                           Name
@@ -610,10 +654,19 @@ export default function HomePage() {
                         />
                         {errors.message && <p className="text-xs text-red-600">{errors.message}</p>}
                       </div>
+                      <div className="flex justify-center">
+                        <Turnstile
+                          ref={turnstileRef}
+                          siteKey={TURNSTILE_SITE_KEY}
+                          onSuccess={(token) => setTurnstileToken(token)}
+                          onError={() => setTurnstileToken(null)}
+                          onExpire={() => setTurnstileToken(null)}
+                        />
+                      </div>
                       <Button
                         type="submit"
                         className="w-full bg-blue-600 text-white hover:bg-blue-700"
-                        disabled={isLoading}
+                        disabled={isLoading || !turnstileToken}
                       >
                         {isLoading ? (
                           <>

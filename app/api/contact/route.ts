@@ -1,12 +1,99 @@
 import { NextResponse } from "next/server"
 
+// Simple in-memory rate limiting (resets on server restart)
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>()
+const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
+const MAX_REQUESTS = 3 // Max 3 requests per minute per IP
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const record = rateLimitMap.get(ip)
+
+  if (!record || now - record.timestamp > RATE_LIMIT_WINDOW) {
+    rateLimitMap.set(ip, { count: 1, timestamp: now })
+    return false
+  }
+
+  if (record.count >= MAX_REQUESTS) {
+    return true
+  }
+
+  record.count++
+  return false
+}
+
 export async function POST(req: Request) {
   try {
-    const { name, email, company, interest, message, type } = await req.json()
+    // Get client IP for rate limiting
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] ||
+               req.headers.get("x-real-ip") ||
+               "unknown"
+
+    // Check rate limit
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      )
+    }
+
+    const { name, email, company, interest, message, type, website, timestamp, turnstileToken } = await req.json()
+
+    // Honeypot check - if 'website' field is filled, it's likely a bot
+    if (website && website.trim() !== '') {
+      // Silently reject but return success to confuse bots
+      return NextResponse.json({ success: true, message: "Message sent successfully!" })
+    }
+
+    // Time-based check - reject if submitted too quickly (< 3 seconds)
+    // Real users take time to fill forms, bots submit instantly
+    if (timestamp && Date.now() - timestamp < 3000) {
+      // Silently reject but return success to confuse bots
+      return NextResponse.json({ success: true, message: "Message sent successfully!" })
+    }
+
+    // Verify Cloudflare Turnstile token
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      if (!turnstileToken) {
+        return NextResponse.json({ error: "Security verification required" }, { status: 400 })
+      }
+
+      const turnstileResponse = await fetch(
+        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            secret: process.env.TURNSTILE_SECRET_KEY,
+            response: turnstileToken,
+          }),
+        }
+      )
+
+      const turnstileResult = await turnstileResponse.json()
+
+      if (!turnstileResult.success) {
+        console.log("Turnstile verification failed:", turnstileResult)
+        return NextResponse.json({ error: "Security verification failed" }, { status: 400 })
+      }
+
+      console.log("Turnstile verification passed")
+    }
 
     // Validate required fields
     if (!name || !email || !message) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email format" }, { status: 400 })
+    }
+
+    // Basic content validation (prevent very long messages)
+    if (message.length > 5000 || name.length > 100) {
+      return NextResponse.json({ error: "Message too long" }, { status: 400 })
     }
 
     const subject = type === "demo" ? "New Demo Request" : "New Contact Form Message"
