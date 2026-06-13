@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '@/components/ui/carousel'
 import { toast } from 'sonner'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -183,10 +184,26 @@ export default function ProductJourney() {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const couponCode = 'LOYALTY15'
   const [isBrowser, setIsBrowser] = useState(false)
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>()
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [slideCount, setSlideCount] = useState(0)
+
+  const sofaImages = [
+    { src: '/images/sofa-multiview.png', alt: 'Brown leather sofa – multiple angles' },
+    { src: '/images/sofa-dimensions.png', alt: 'Brown leather sofa – dimensions' },
+    { src: '/images/sofa-lifestyle.png', alt: 'Brown leather sofa – room setting' },
+  ]
 
   useEffect(() => {
     setIsBrowser(true)
   }, [])
+
+  useEffect(() => {
+    if (!carouselApi) return
+    setSlideCount(carouselApi.scrollSnapList().length)
+    setCurrentSlide(carouselApi.selectedScrollSnap())
+    carouselApi.on('select', () => setCurrentSlide(carouselApi.selectedScrollSnap()))
+  }, [carouselApi])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -420,15 +437,36 @@ export default function ProductJourney() {
           <h2 className="text-3xl font-bold mb-2 text-gray-800">Explore your</h2>
           <h1 className="text-4xl font-bold mb-6 text-primary">Sofa's Story</h1>
 
-          <div className="relative w-full mb-6 rounded-lg overflow-hidden shadow-lg">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mjEAzcEcSHx_HiSyGmIZT_788eb4cd2ecc45b2bf60495927b125a6-poXYOMB78R8Mv2HchIzWj3JbHlsIRA.png"
-              alt="Brown leather sofa"
-              width={800}
-              height={600}
-              layout="responsive"
-              className="transition-transform duration-300 hover:scale-105"
-            />
+          <div className="relative w-full mb-6">
+            <Carousel setApi={setCarouselApi} opts={{ loop: true }} className="w-full">
+              <CarouselContent>
+                {sofaImages.map((img, index) => (
+                  <CarouselItem key={index}>
+                    <div className="rounded-lg overflow-hidden shadow-lg">
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        width={800}
+                        height={600}
+                        className="w-full object-cover"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-2 bg-white/80 hover:bg-white" />
+              <CarouselNext className="right-2 bg-white/80 hover:bg-white" />
+            </Carousel>
+            <div className="flex justify-center gap-1.5 mt-2">
+              {sofaImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => carouselApi?.scrollTo(index)}
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${currentSlide === index ? 'bg-primary' : 'bg-gray-300'}`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           <div className="flex justify-center space-x-1 w-full bg-gray-100 rounded-lg p-1">
